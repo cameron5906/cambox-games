@@ -5,5 +5,9 @@
         "cambox-common",
         "cambox-api",
         "cambox-ui"
-    ]
+    ],
+    "scripts": {
+        "start": "cd cambox-api/ && npm start",
+        "build": "cd cambox-api/ && npm run build"
+    }
 }
