@@ -5,8 +5,7 @@ import {
     JoinResponseData
 } from '@cambox/common/types/models/api';
 import { GameDetails } from '@cambox/common/types/models/GameDetails';
-
-const API_BASE = 'http://localhost:3001';
+import { apiBasePath } from '../settings.json';
 
 class ApiService {
     async authenticate( email: string ): Promise<ApiResponse<AuthenticateResponseData>> {
@@ -42,7 +41,7 @@ class ApiService {
     }
 
     private async post<T>( endpoint: string, body?: any ): Promise<T> {
-        const response = await fetch( `${API_BASE}/${endpoint}`, { 
+        const response = await fetch( `${apiBasePath}/${endpoint}`, { 
             method: 'POST',
             headers: this.getHeaders(),
             body: JSON.stringify( body || {} )
@@ -53,7 +52,7 @@ class ApiService {
     }
 
     private async get<T>( endpoint: string ): Promise<T> {
-        const response = await fetch( `${API_BASE}/${endpoint}`, {
+        const response = await fetch( `${apiBasePath}/${endpoint}`, {
             headers: this.getHeaders()
         } );
 

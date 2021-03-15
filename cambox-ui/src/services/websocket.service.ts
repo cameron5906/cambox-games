@@ -7,18 +7,17 @@ import { setUi } from '../redux/actions/ui.actions';
 import store from '../redux/store';
 import { Player } from '../types/interfaces/room/Player';
 import { Command } from '@cambox/common/types/models/Command';
-
-const HOST_ADDRESS = 'http://127.0.0.1:3002';
+import { websocketHost } from '../settings.json';
 
 class WebsocketService {
     private socket: SocketIOClient.Socket;
     private roomCode?: string;
 
     constructor() {
-        this.socket = io(HOST_ADDRESS, {
+        this.socket = io( websocketHost, {
             secure: false,
             autoConnect: false
-        });
+        } );
 
         this.socket.on( 'connect', this.onConnected.bind( this ) );
         this.socket.on( 'disconnect', this.onDisconnected.bind( this ) );

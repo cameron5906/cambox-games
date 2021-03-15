@@ -1,12 +1,12 @@
+import Player from 'src/types/classes/Player';
 import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
 import { GameService } from 'src/services/game.service';
 import { SecurityService } from 'src/services/security.service';
-import Player from 'src/types/classes/Player';
 import { AuthToken } from 'src/types/interfaces/AuthToken';
 import { Command } from '@cambox/common/types/models/Command';
 import { PlayerSocket } from 'src/types/types/PlayerSocket';
 
-@WebSocketGateway( 3002, { transports: [ 'websocket', 'polling' ] } )
+@WebSocketGateway({ transports: [ 'websocket', 'polling' ] } )
 export class PlayerGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   constructor(
