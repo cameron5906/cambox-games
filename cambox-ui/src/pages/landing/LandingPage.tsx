@@ -25,7 +25,13 @@ const LandingPage = ( { authenticateAction, createRoomAction, joinRoomAction, pr
     const renderAuthentication = () => (
         <>
             <p>Enter your RSI email to play</p>
-            <input type="email" placeholder="Enter your RSI email" value={email} onChange={evt => setEmail( evt.target.value )} />
+            <input 
+                type="email" 
+                placeholder="Enter your RSI email" 
+                value={email} 
+                onChange={evt => setEmail( evt.target.value )}
+                onKeyUp={evt => evt.key === 'Enter' && authenticateAction( email )} 
+            />
             <button onClick={() => authenticateAction( email )}>Start</button>
         </>
     )
@@ -33,7 +39,13 @@ const LandingPage = ( { authenticateAction, createRoomAction, joinRoomAction, pr
     const renderJoinRoom = () => (
         <>
             <p>Enter a room code to join, or create one</p>
-            <input type="text" maxLength={4} value={code} onChange={evt => setCode( evt.target.value )} />
+            <input 
+                type="text" 
+                maxLength={4} 
+                value={code} 
+                onChange={evt => setCode( evt.target.value )}
+                onKeyUp={evt => evt.key === 'Enter' && doJoinRoom()} 
+            />
             <button onClick={doJoinRoom}>Join</button>
             <button onClick={createRoomAction}>Create</button>
         </>
