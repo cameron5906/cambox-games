@@ -4,7 +4,7 @@ import { UiStyleProperty } from "@cambox/common/types/enums";
 import { UiType } from '@cambox/common/types/types/UiType';
 
 class UiBuilder {
-    private lastElement: UiElement = null;
+    private lastElement: UiElement | null = null;
     private elements: UiElement[] = [];
 
     constructor() {
@@ -60,7 +60,7 @@ class UiBuilder {
     public withStyle( type: UiStyleProperty, value: string ): UiBuilder {
         if( !this.lastElement ) throw 'No elements have been added to apply styles to';
         
-        this.lastElement.styles = [ ...this.lastElement.styles, { type, value } ];
+        this.lastElement.styles = [ ...( this.lastElement?.styles || [] ), { type, value } ];
         
         return this;
     }
@@ -183,7 +183,7 @@ class UiBuilder {
     }
 
     public withItems( items: UiListItem[] ) {
-        if( this.lastElement.type !== 'list' ) throw 'Last element was not a List';
+        if( this.lastElement?.type !== 'list' ) throw 'Last element was not a List';
         ( this.lastElement as UiList ).items = items;
         return this;
     }
@@ -218,7 +218,7 @@ class UiBuilder {
     private addClass( name: string ): UiBuilder {
         if( !this.lastElement ) throw 'No element to add class to';
 
-        this.lastElement.classes = [ ...( this.lastElement.classes || [] ), name ];
+        this.lastElement.classes = [ ...( this.lastElement?.classes || [] ), name ];
         return this;
     }
 }
