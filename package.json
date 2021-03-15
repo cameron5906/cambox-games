@@ -8,6 +8,7 @@
     ],
     "scripts": {
         "start": "cd cambox-api/ && npm start",
+        "preinstall": "npm i -g @nestjs/cli",
         "build": "cd cambox-api/ && npm run build"
     }
 }
