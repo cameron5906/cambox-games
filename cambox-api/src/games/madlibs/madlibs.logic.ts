@@ -49,7 +49,7 @@ export const getNextWordForPlayer = ( room: Room, player: Player ): string | nul
 /////Game state//////
 export const areAllAnswersSubmitted = ( room: Room ) => {
     const { currentPrompt: { words } } = room.getState<MadlibsGameState>();
-    return room.getPlayers().some( ply => 
+    return room.getPlayers().every( ply => 
         ply.get<string[]>( PlayerVariable.Answers ).length === words.length 
     );
 }
