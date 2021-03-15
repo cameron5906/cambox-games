@@ -26,7 +26,7 @@ const winScreen = ( player: Player, ui: UiBuilder, room: Room, { winScreenCountd
         then => then.text( 'You won!' ),
         otherwise => 
             otherwise
-                .text( `${getFirstPlace( room )} wins!` )
+                .text( `${getFirstPlace( room ).getName()} wins!` )
                 .text( 'Better luck next time...' )
     )
     .text( `Next game begins in ${winScreenCountdown} seconds` )
