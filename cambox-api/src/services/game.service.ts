@@ -3,6 +3,7 @@ import { MadlibsGame } from 'src/games/madlibs/madlibs.game';
 import { SplitTheRoomGame } from 'src/games/split-the-room/split-the-room.game';
 import Player from 'src/types/classes/Player';
 import Room from 'src/types/classes/Room';
+import gamesList, { MADLIBS_ID, SPLIT_THE_ROOM_ID } from 'src/games/games.list';
 
 @Injectable()
 export class GameService {
@@ -32,22 +33,11 @@ export class GameService {
     public startGame( roomCode: string, gameId: string ) {
         const room = this.activeRooms.find( room => room.getRoomCode() === roomCode );
         if( !room ) throw 'Room does not exist';
+        
+        const gameDetails = gamesList.find( g => g.id === gameId );
+        if( !gameDetails ) throw 'Game does not exist';
 
-        if( gameId === 'madlibs' ) {
-            room.startGame( {
-                id: '',
-                name: 'Mad Libs',
-                description: 'Fill in a story with your own spin!',
-                iconUrl: ''
-            }, this.madLibs );
-        } else if( gameId === 'splittheroom' ) {
-            room.startGame({
-                id: '',
-                name: 'Split the Room',
-                description: '',
-                iconUrl: ''
-            }, this.splitTheRoom );
-        }
+        room.startGame( gameDetails, this.getGameHandler( gameId ) );
     }
 
     public stopGame( roomCode: string ) {
@@ -115,6 +105,15 @@ export class GameService {
         }
 
         return buffer;
+    }
+
+    private getGameHandler( id: string ) {
+        switch( id ) {
+            case MADLIBS_ID:
+                return this.madLibs;
+            case SPLIT_THE_ROOM_ID:
+                return this.splitTheRoom;
+        }
     }
 
     private async wait( ms: number ) {

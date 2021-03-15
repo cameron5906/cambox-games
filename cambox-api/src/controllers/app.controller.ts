@@ -16,6 +16,7 @@ import {
   JoinRoomPayload, 
   StartGamePayload
 } from '@cambox/common/types/models/api';
+import gamesList from 'src/games/games.list';
 
 @Controller()
 export class AppController {
@@ -167,20 +168,7 @@ export class AppController {
   ): Promise<ApiResponse<GameDetails[]>> {
     return {
       ok: true,
-      data: [
-        {
-          id: 'madlibs',
-          name: 'Mad Libs',
-          description: 'Who can come up with the funniest story?',
-          iconUrl: 'https://www.perkinselearning.org/sites/elearning.perkinsdev1.org/files/styles/node_highlighted_image/public/Mad_Libs_logo.png?itok=w4w5j4AS'
-        },
-        {
-          id: 'splittheroom',
-          name: 'Split the Room',
-          description: 'In this surreal game of what-ifs, players are given a weird hypothetical situation that’s missing one key detail.',
-          iconUrl: 'https://static.wikia.nocookie.net/jackboxgames/images/1/18/Split-the-room-logo.png/revision/latest?cb=20190403125705'
-        }
-      ]
+      data: gamesList
     }
   }
 }
