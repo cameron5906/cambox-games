@@ -1,5 +1,5 @@
-import { UiElement } from "@cambox/common/types/types/UiElement";
-import { Command } from "@cambox/common/types/models/Command";
+import { UiElement } from "../../../types/types/UiElement";
+import { Command } from "../../../types/models/Command";
 import { IRoom } from "./IRoom";
 import { IPlayer } from "./IPlayer";
 

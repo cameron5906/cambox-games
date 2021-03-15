@@ -1,6 +1,5 @@
-import { Socket } from 'socket.io';
-import Player from "../../../cambox-api/src/types/classes/Player";
+import { IPlayer } from '../interfaces/api/IPlayer';
 
-export type PlayerSocket = Socket & {
-    instance: Player;
+export type PlayerSocket = any & {
+    instance: IPlayer;
 }

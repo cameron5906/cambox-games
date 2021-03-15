@@ -1,5 +1,16 @@
 {
     "name": "@cambox/common",
     "version": "0.0.1",
-    "private": true
+    "private": false,
+    "description": "A common module for building games that can be injected into Cambox Games",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc"
+    },
+    "author": "Cameron Cooper",
+    "license": "MIT",
+    "devDependencies": {
+        "typescript": "^4.1.2"
+    }
 }
