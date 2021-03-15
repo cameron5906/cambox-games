@@ -110,7 +110,7 @@ const resultsPhase = ( ui: UiBuilder, room: Room, { currentPlayer }: SplitTheRoo
                         )
                     .container()
                         .vertical()
-                        .withStyle( UiStyleProperty.AlignContent, 'flex-end' )
+                        .withStyle( UiStyleProperty.AlignItems, 'flex-end' )
                         .padding( '1em' )
                         .withWidth( 300 )
                         .withChildren( noColumn =>

@@ -14,6 +14,7 @@ export enum UiStyleProperty {
     FlexDirection,
     JustifyContent,
     AlignContent,
+    AlignItems,
     Display,
     Transition,
     Transform,

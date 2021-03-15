@@ -66,6 +66,8 @@ const Element = ( { element, onCommand }: Props ) => {
                 return { ...styleObj, justifyContent: rule.value };
             case UiStyleProperty.AlignContent:
                 return { ...styleObj, alignContent: rule.value };
+            case UiStyleProperty.AlignItems:
+                return { ...styleObj, alignItems: rule.value };
             case UiStyleProperty.Transition:
                 return { ...styleObj, transition: rule.value };
             case UiStyleProperty.MarginTop:
