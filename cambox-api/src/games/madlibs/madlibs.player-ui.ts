@@ -1,4 +1,4 @@
-import UiBuilder from "src/types/classes/UiBuilder";
+import UiBuilder from "@cambox/common/util/UiBuilder";
 import { fillPrompt, getNextWordForPlayer, getFirstPlace, hasVoted } from "./madlibs.logic";
 import { UiListItem } from "@cambox/common/types/interfaces/ui";
 import { UiElement } from "@cambox/common/types/types/UiElement";

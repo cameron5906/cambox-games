@@ -1,4 +1,4 @@
-import UiBuilder from "src/types/classes/UiBuilder";
+import UiBuilder from "@cambox/common/util/UiBuilder";
 import { UiElement } from "@cambox/common/types/types/UiElement";
 import { SplitTheRoomGameState, Phase } from "./split-the-room.types";
 import { getCurrentPlayer, getVotes, isPositiveVoteMajority, getVoteSplit, getCompletedPrompt, calculateScore, getYesPercent, getNoPercent } from "./split-the-room.logic";

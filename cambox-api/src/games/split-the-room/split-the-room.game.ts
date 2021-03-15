@@ -4,7 +4,7 @@ import { Command } from '@cambox/common/types/models/Command';
 import { UiElement } from '@cambox/common/types/types/UiElement';
 import { SplitTheRoomGameState, Phase, PlayerVariable } from './split-the-room.types';
 import splitTheRoomPlayerUi from './split-the-room.player-ui';
-import UiBuilder from 'src/types/classes/UiBuilder';
+import UiBuilder from '@cambox/common/util/UiBuilder';
 import splitTheRoomHostUi from './split-the-room.host-ui';
 import splitTheRoomPrompts from './split-the-room.prompts';
 import { CommandType } from '@cambox/common/types/enums';

@@ -5,6 +5,10 @@
     "description": "A common module for building games that can be injected into Cambox Games",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "repository": {
+        "url": "https://github.com/cameron5906/cambox-games",
+        "directory": "cambox-common"
+    },
     "scripts": {
         "build": "tsc"
     },

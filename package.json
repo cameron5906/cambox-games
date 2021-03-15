@@ -1,6 +1,6 @@
 {
-    "name": "Cambox",
-    "private": true,
+    "name": "cambox",
+    "private": false,
     "workspaces": [
         "cambox-common",
         "cambox-api",
