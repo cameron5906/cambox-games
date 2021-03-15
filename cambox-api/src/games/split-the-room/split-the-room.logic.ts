@@ -1,5 +1,5 @@
 import Room from "src/types/classes/Room";
-import { SplitTheRoomGameState, Phase, Task } from "./split-the-room.types";
+import { SplitTheRoomGameState, Phase, Task, PlayerVariable } from "./split-the-room.types";
 import Player from "src/types/classes/Player";
 import splitTheRoomPrompts from "./split-the-room.prompts";
 
@@ -10,7 +10,7 @@ export const isPositiveVoteMajority = ( room: Room ) =>
     getVotes( room ).filter( v => v.isYes ).length > getVotes( room ).filter( v => !v.isYes ).length;
 
 export const hasEveryoneVoted = ( room: Room ) => 
-    getVotes( room ).length === room.getPlayers().length;
+    getVotes( room ).length === ( room.getPlayers().length - 1 );
 
 export const hasVoted = ( room: Room, player: Player ) =>
     getVotes( room ).some( v => v.player === player );
@@ -97,13 +97,40 @@ export const showResults = ( room: Room ) => {
 }
 
 export const completeRound = ( room: Room ) => {
+    const { currentPlayer, chosenPlayerIndex, promptIndex } = room.getState<SplitTheRoomGameState>();
+    let nextIndex = chosenPlayerIndex > room.getPlayers().length - 2 ? chosenPlayerIndex + 1 : 0;
+    const nextPlayer = room.getPlayers()[ nextIndex ];
+
+    currentPlayer.set<number>( 
+        PlayerVariable.Score, 
+        currentPlayer.get<number>( PlayerVariable.Score ) + calculateScore( room ) 
+    );
+
     room.setState<SplitTheRoomGameState>({
         phase: Phase.WritingPrompt,
-        currentPlayer: room.getRandomPlayer(),
-        currentPrompt: splitTheRoomPrompts[0],
+        currentPlayer: nextPlayer,
+        currentPrompt: promptIndex + 1 === splitTheRoomPrompts.length ? splitTheRoomPrompts[0] : splitTheRoomPrompts[promptIndex + 1],
         votes: [],
         word: '',
         votingCooldown: 30,
-        promptCooldown: 30
+        promptCooldown: 30,
+        chosenPlayerIndex: nextIndex,
+        promptIndex: 0
     });
-} 
+
+    beginPromptPhase( room );
+}
+
+export const getBlankPrompt = ( room: Room ) =>
+    room.getState<SplitTheRoomGameState>().currentPrompt.text.replace( '^', '____' );
+
+export const getCompletedPrompt = ( room: Room ) => {
+    const { currentPrompt, word } = room.getState<SplitTheRoomGameState>();
+    return currentPrompt.text.replace( '^', word );
+}
+
+export const calculateScore = ( room: Room ) => {
+    const maxPoints = 5000;
+    const { yes, no } = getVoteSplit( room );
+    return Math.floor( ( yes.length / ( yes.length + no.length ) ) * maxPoints );
+}

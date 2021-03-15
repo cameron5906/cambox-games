@@ -2,7 +2,7 @@ import UiBuilder from "src/types/classes/UiBuilder";
 import Room from "src/types/classes/Room";
 import { UiElement } from "@cambox/common/types/types/UiElement";
 import { SplitTheRoomGameState, Phase } from "./split-the-room.types";
-import { getCurrentPlayer, getVotes, isPositiveVoteMajority, getVoteSplit } from "./split-the-room.logic";
+import { getCurrentPlayer, getVotes, isPositiveVoteMajority, getVoteSplit, getCompletedPrompt, calculateScore } from "./split-the-room.logic";
 import { UiStyleProperty } from "@cambox/common/types/enums";
 
 export default ( ui: UiBuilder, room: Room ): UiElement[] => {
@@ -11,9 +11,9 @@ export default ( ui: UiBuilder, room: Room ): UiElement[] => {
     return (() => {
         switch( state.phase ) {
             case Phase.Results:
-                return resultsPhase( ui, room );
+                return resultsPhase( ui, room, state );
             case Phase.Voting:
-                return votingPhase( ui, room );
+                return votingPhase( ui, room, state );
             case Phase.WritingPrompt:
                 return writingPromptPhase( ui, room, state );
         }
@@ -32,6 +32,7 @@ const writingPromptPhase = ( ui: UiBuilder, room: Room, { promptCooldown }: Spli
                         .asCircular()
                     .text( `${getCurrentPlayer( room ).getName()} is completing the prompt` )
                         .withSize( 30 )
+                        .marginLeft( '0.8em' )
                         .withColor( '#1d3557' )
                         .bold()
             )
@@ -40,13 +41,21 @@ const writingPromptPhase = ( ui: UiBuilder, room: Room, { promptCooldown }: Spli
             .italic()
             .marginTop( '1.5em' );
 
-const votingPhase = ( ui: UiBuilder, room: Room ) =>
+const votingPhase = ( ui: UiBuilder, room: Room, { currentPrompt: { question } }: SplitTheRoomGameState ) =>
     ui
-        .text( `${getVotes( room ).length}/${room.getPlayers().length} votes have been cast` )
+        .text( getCompletedPrompt( room ) )
             .withSize( 30 )
             .withColor( '#1d3557' )
+        .text( question )
+            .withSize( 26 )
+            .withColor( '#1d3557' )
+            .marginBottom( '3em' )
+        .text( `${getVotes( room ).length}/${room.getPlayers().length} votes have been cast` )
+            .withSize( 24 )
+            .marginLeft( '3em' )
+            .marginRight( '3em' )
             .bold()
-            .marginBottom( '1em' )
+            .marginBottom( '0.5em' )
         .container()
             .horizontal()
             .withChildren( voters =>
@@ -60,7 +69,7 @@ const votingPhase = ( ui: UiBuilder, room: Room ) =>
                 , voters )
             )
 
-const resultsPhase = ( ui: UiBuilder, room: Room ) =>
+const resultsPhase = ( ui: UiBuilder, room: Room, { currentPlayer }: SplitTheRoomGameState ) =>
     ui
         .text( `${isPositiveVoteMajority( room ) ? 'YES' : 'NO'} wins!` )
             .withSize( 30 )
@@ -74,6 +83,8 @@ const resultsPhase = ( ui: UiBuilder, room: Room ) =>
                     .container()
                         .vertical()
                         .withStyle( UiStyleProperty.AlignContent, 'flex-start' )
+                        .padding( '1em' )
+                        .withWidth( 300 )
                         .withChildren( yesColumn =>
                             yesColumn
                                 .text( 'YES' )
@@ -96,6 +107,8 @@ const resultsPhase = ( ui: UiBuilder, room: Room ) =>
                     .container()
                         .vertical()
                         .withStyle( UiStyleProperty.AlignContent, 'flex-end' )
+                        .padding( '1em' )
+                        .withWidth( 300 )
                         .withChildren( noColumn =>
                             noColumn
                                 .text( 'NO' )
@@ -116,3 +129,7 @@ const resultsPhase = ( ui: UiBuilder, room: Room ) =>
                                     )
                         )
             )
+        .text( `+${calculateScore( room ).toLocaleString()}pts to ${currentPlayer.getName()}!` )
+            .withSize( 18 )
+            .italic()
+            .marginTop( '1.5em' )

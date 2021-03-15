@@ -11,6 +11,8 @@ export interface SplitTheRoomGameState {
     votingCooldown: number;
     promptCooldown: number;
     phase: Phase;
+    chosenPlayerIndex: number;
+    promptIndex: number;
 }
 
 export enum Phase {
