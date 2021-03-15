@@ -4,7 +4,7 @@ import { GameService } from 'src/services/game.service';
 import { SecurityService } from 'src/services/security.service';
 import { AuthToken } from 'src/types/interfaces/AuthToken';
 import { Command } from '@cambox/common/types/models/Command';
-import { PlayerSocket } from 'src/types/types/PlayerSocket';
+import { PlayerSocket } from '@cambox/common/types/types/PlayerSocket';
 
 @WebSocketGateway({ transports: [ 'websocket', 'polling' ] } )
 export class PlayerGateway implements OnGatewayConnection, OnGatewayDisconnect {
