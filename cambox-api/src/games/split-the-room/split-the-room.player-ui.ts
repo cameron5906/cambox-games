@@ -55,7 +55,7 @@ const votingPhase = (
 ) =>
     ui
         .if(
-            () => getCurrentPlayer( room ) === player,
+            () => getCurrentPlayer( room ) !== player,
             then =>
                 then
                     .text( question )
