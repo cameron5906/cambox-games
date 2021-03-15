@@ -1471,7 +1471,7 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@nestjs/cli@^7.0.0":
+"@nestjs/cli@^7.5.6":
   version "7.5.6"
   resolved "https://registry.yarnpkg.com/@nestjs/cli/-/cli-7.5.6.tgz#f52a7cf6215149c2e561070b5edf40debecb06b7"
   integrity sha512-nJCoKFleVV6NCkezc+cokJCVnDQBJoxmBVggQ1XfJ6Lvjy9TFQfG2J/nDdVurxpm7mlJm/Yg/rbXxaiUZVcJAQ==
@@ -8873,6 +8873,11 @@ neo-async@^2.5.0, neo-async@^2.6.1, neo-async@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
+
+nest@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/nest/-/nest-0.1.6.tgz#81aa0236f0ebc996523e5d3855c73dd382a2b255"
+  integrity sha1-gaoCNvDryZZSPl04Vcc904KislU=
 
 next-tick@~1.0.0:
   version "1.0.0"
