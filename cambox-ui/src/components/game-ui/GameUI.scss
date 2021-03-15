@@ -1,0 +1,29 @@
+.game-ui {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    background-color: rgba(63, 63, 63, 0.13);
+    border: 1px solid rgba(102, 102, 102, 0.247);
+
+    @media ( min-width: 770px ) {
+        max-width: 90%;
+    }
+
+    @media ( max-width: 768px ) {
+        width: 90%;
+    }
+
+    p {
+        text-shadow: 1px 1px rgba(0, 0, 0, 0.507);
+    }
+
+    ul {
+        padding: 0;
+        list-style: none;
+    }
+}

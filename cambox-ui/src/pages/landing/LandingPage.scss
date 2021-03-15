@@ -1,0 +1,56 @@
+.landing.page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+    h1 {
+        color: #e63946;
+        font-weight: bold;
+        font-size: 42px;
+        margin: 0;
+        text-align: center;
+    }
+}
+
+.landing-container {
+    display: flex;
+    
+    /** Self centering **/
+    flex-direction: column;
+    align-self: center;
+
+    margin-top: 2em;
+
+    box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 1em;
+    background-color: #457b9d;
+    padding: 2em;
+
+    width: 30%;
+    @media ( max-width: 768px ) {
+        width: 80%;
+    }
+
+    p {
+        color: #FFF;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    input {
+        align-self: center;
+        margin-bottom: 1.5em;
+        text-align: center;
+    
+        width: 50%;
+        @media ( max-width: 768px ) {
+            width: 90%;
+        }
+    }
+
+    button {
+        width: 10em;
+        align-self: center;
+    }
+}

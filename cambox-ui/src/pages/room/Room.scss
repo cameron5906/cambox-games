@@ -1,0 +1,48 @@
+.room.page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+    .room-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.players-container, .games-container {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    margin: auto auto;
+    height: 25em;
+    background-color: #a8dadc;
+    border: 2px solid #5c9092;
+    border-radius: 0.4em;
+
+    width: 50%;
+    @media ( max-width: 768px ) {
+        width: 90%;
+        justify-content: center;
+        height: auto;
+    }
+
+    h1 {
+        position: absolute;
+        left: 0;
+        top: -1.5em;
+
+        text-align: center;
+        width: 100%;
+        margin: 0;
+    }
+}
+
+.start-button {
+    width: 10em;
+    align-self: center;
+    background-color: #e63946;
+    color: #FFF;
+    padding: 0.8em;
+    margin-top: 1.5em;
+}

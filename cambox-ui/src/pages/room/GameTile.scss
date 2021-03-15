@@ -1,0 +1,28 @@
+.game-tile--container {
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    cursor: pointer;
+    transition: 0.25s ease;
+
+    &:hover {
+        transform: scale( 1.02 );
+        
+        .image {
+            opacity: 0.9;
+        }
+    }
+
+    .image {
+        width: 128px;
+        height: 128px;
+        border-radius: 0.5em;
+        box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .name {
+        margin-top: 0.4em;
+        text-align: center;
+        font-weight: bold;
+    }
+}

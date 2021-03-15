@@ -1,0 +1,28 @@
+.player-tile--container {
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+
+    @media ( max-width: 768px ) {
+        padding: 1em;
+        justify-content: center;
+    }
+
+    .avatar {
+        border-radius: 0.5em;
+        box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
+        
+        width: 128px;
+        height: 128px;
+        @media ( max-width: 768px ) {
+            width: 64px;
+            height: 64px;
+        }
+    }
+
+    .name {
+        margin-top: 0.4em;
+        text-align: center;
+        font-weight: bold;
+    }
+}

@@ -1,0 +1,98 @@
+@font-face {
+  font-family: 'robotothin';
+  src: url('./fonts/Roboto-Thin-webfont.eot');
+  src: url('./fonts/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Roboto-Thin-webfont.woff') format('woff'),
+       url('./fonts/Roboto-Thin-webfont.ttf') format('truetype'),
+       url('./fonts/Roboto-Thin-webfont.svg#robotothin') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'robotobold';
+  src: url('./fonts/Roboto-Bold-webfont.eot');
+  src: url('./fonts/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Roboto-Bold-webfont.woff') format('woff'),
+       url('./fonts/Roboto-Bold-webfont.ttf') format('truetype'),
+       url('./fonts/Roboto-Bold-webfont.svg#robotobold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'robotomedium';
+  src: url('./fonts/Roboto-Medium-webfont.eot');
+  src: url('./fonts/Roboto-Medium-webfont.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Roboto-Medium-webfont.woff') format('woff'),
+       url('./fonts/Roboto-Medium-webfont.ttf') format('truetype'),
+       url('./fonts/Roboto-Medium-webfont.svg#robotomedium') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'robotoregular';
+  src: url('./fonts/Roboto-Regular-webfont.eot');
+  src: url('./fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Roboto-Regular-webfont.woff') format('woff'),
+       url('./fonts/Roboto-Regular-webfont.ttf') format('truetype'),
+       url('./fonts/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html, body, #root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#root {
+  padding-top: 3em;
+}
+
+html, body {
+  background-color: #f1faee;
+}
+
+p, span {
+  font-family: 'robotothin';
+}
+
+h4 {
+  font-family: 'robotomedium';
+}
+
+span {
+  font-family: 'robotoregular';
+  font-weight: 200;
+}
+
+.bold {
+  font-family: 'robotobold';
+}
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+input {
+  padding: 0.5em;
+  border-radius: 0.3em;
+}
+
+button {
+  padding: 0.4em;
+  background-color: #a8dadc;
+  box-shadow: 1px 2px 5px #83afb1;
+  border-radius: 0.25em;
+  margin: 0.3em;
+  color: rgb(90, 90, 90);
+  border: 0;
+}
