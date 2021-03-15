@@ -1,0 +1,5 @@
+node_modules
+cambox-api/dist
+cambox-ui/dist
+cambox-ui/build
+.vscode

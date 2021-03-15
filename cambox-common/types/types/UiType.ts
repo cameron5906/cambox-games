@@ -1,0 +1,1 @@
+export type UiType = 'button' | 'container' | 'input' | 'list' | 'text' | 'image' | 'list_item';

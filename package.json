@@ -1,0 +1,9 @@
+{
+    "name": "Cambox",
+    "private": true,
+    "workspaces": [
+        "cambox-common",
+        "cambox-api",
+        "cambox-ui"
+    ]
+}
