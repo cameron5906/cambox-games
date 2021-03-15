@@ -1,18 +1,20 @@
 import { GameDetails } from "@cambox/common/types/models/GameDetails";
 import { Command } from "@cambox/common/types/models/Command";
-import { GameService } from "../interfaces/GameService";
+import { IGameService } from "../../../../cambox-common/types/interfaces/api/IGameService";
 import { GameState } from "../interfaces/GameState";
 import Player from "./Player";
+import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
+import { IPlayer } from "@cambox/common/types/interfaces/api/IPlayer";
 
-class Room {    
+class Room implements IRoom {    
     private roomCode: string;
-    private players: Player[];
+    private players: IPlayer[];
     private inProgress: boolean;
     private recurringTasks: { [id: string]: number };
     private delayedTasks: { [id: string]: number };
 
     private gameState: GameState | null;
-    private gameHandler: GameService | null;
+    private gameHandler: IGameService | null;
 
     constructor( roomCode: string ) {
         this.roomCode = roomCode;
@@ -34,7 +36,7 @@ class Room {
         this.broadcastToPlayers( 'room_ready', true );
     }
 
-    public startGame( gameMode: GameDetails, gameHandler: GameService ) {
+    public startGame( gameMode: GameDetails, gameHandler: IGameService ) {
         this.gameHandler = gameHandler;
 
         for( const player of this.players )
@@ -63,15 +65,15 @@ class Room {
         this.sendPlayerRoster();
     }
 
-    public getPlayers(): Player[] {
+    public getPlayers(): IPlayer[] {
         return this.players.filter( p => !p.isHosting() );
     }
 
-    public getRandomPlayer(): Player {
+    public getRandomPlayer(): IPlayer {
         return this.getPlayers()[ Math.floor( Math.random() * this.getPlayers().length ) ];
     }
 
-    public getHost(): Player {
+    public getHost(): IPlayer {
         return this.players.find( p => p.isHosting() );
     }
 

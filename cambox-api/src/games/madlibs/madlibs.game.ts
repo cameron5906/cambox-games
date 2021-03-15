@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import Player from 'src/types/classes/Player';
-import Room from 'src/types/classes/Room';
 import { CommandType } from '@cambox/common/types/enums/CommandType';
 import { Command } from '@cambox/common/types/models/Command';
-import { GameService } from 'src/types/interfaces/GameService';
+import { IGameService } from '@cambox/common/types/interfaces/api/IGameService';
 import { UiElement } from '@cambox/common/types/types/UiElement';
 import madlibsHostUi from './madlibs.host-ui';
 import madlibsPlayerUi from './madlibs.player-ui';
@@ -11,10 +9,12 @@ import { handleAnswerSubmission, handlePlayerTyping, handleVote } from './madlib
 import { MadlibsGameState, Phase, PlayerVariable } from './madlibs.types';
 import { UiClickCommand } from '@cambox/common/types/interfaces/ui';
 import madlibsPrompts from './madlibs.prompts';
+import { IRoom } from '@cambox/common/types/interfaces/api/IRoom';
+import { IPlayer } from '@cambox/common/types/interfaces/api/IPlayer';
 
 @Injectable()
-export class MadlibsGame implements GameService {
-    async onGameStart( room: Room ) {
+export class MadlibsGame implements IGameService {
+    async onGameStart( room: IRoom ) {
         room.setState<MadlibsGameState>({
             currentPrompt: madlibsPrompts[0],
             votes: [],
@@ -33,21 +33,21 @@ export class MadlibsGame implements GameService {
         }, 1000 );
     }
     
-    async onGameEnd( room: Room ) {
+    async onGameEnd( room: IRoom ) {
 
     }
 
-    async onPlayerJoin( room: Room, player: Player ) {
+    async onPlayerJoin( room: IRoom, player: IPlayer ) {
         player.set( PlayerVariable.Score, 0 );
         player.set( PlayerVariable.Answers, [] );
         player.set( PlayerVariable.Typing, false );
     }
 
-    async onPlayerLeave( room: Room, player: Player ) {
+    async onPlayerLeave( room: IRoom, player: IPlayer ) {
 
     }
 
-    async onPlayerCommand( room: Room, player: Player, command: Command<any> ) {
+    async onPlayerCommand( room: IRoom, player: IPlayer, command: Command<any> ) {
         const { phase } = room.getState<MadlibsGameState>();
 
         if( phase === Phase.WritingPeriod ) {
@@ -65,19 +65,19 @@ export class MadlibsGame implements GameService {
         }
     }
 
-    async onHostCommand( room: Room, command: Command<any> ) {
+    async onHostCommand( room: IRoom, command: Command<any> ) {
         
     }
 
-    async buildHostUi( room: Room ): Promise<UiElement[]> {
+    async buildHostUi( room: IRoom ): Promise<UiElement[]> {
         return madlibsHostUi( room );
     }
 
-    async buildPlayerUi( room: Room, player: Player ): Promise<UiElement[]> {
+    async buildPlayerUi( room: IRoom, player: IPlayer ): Promise<UiElement[]> {
         return madlibsPlayerUi( room, player );
     }
 
-    private getState( room: Room ): MadlibsGameState {
+    private getState( room: IRoom ): MadlibsGameState {
         return room.getState<MadlibsGameState>();
     }
 }

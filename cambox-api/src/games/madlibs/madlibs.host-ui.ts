@@ -1,12 +1,12 @@
-import Room from "src/types/classes/Room";
 import UiBuilder from "src/types/classes/UiBuilder";
-import Player from "src/types/classes/Player";
 import { UiStyleProperty } from "@cambox/common/types/enums";
 import { fillPrompt, getFirstPlace, getVotesFor } from "./madlibs.logic";
 import { UiElement } from "@cambox/common/types/types/UiElement";
 import { MadlibsGameState, Phase, PlayerVariable } from "./madlibs.types";
+import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
+import { IPlayer } from "@cambox/common/types/interfaces/api/IPlayer";
 
-export default ( room: Room ): UiElement[] => {
+export default ( room: IRoom ): UiElement[] => {
     const state = room.getState<MadlibsGameState>();
     let ui = UiBuilder.create();
 
@@ -20,7 +20,7 @@ export default ( room: Room ): UiElement[] => {
     }
 }
 
-const votingPeriod = ( ui: UiBuilder, room: Room, { showcaseIndex, votingCountdown }: MadlibsGameState ) =>
+const votingPeriod = ( ui: UiBuilder, room: IRoom, { showcaseIndex, votingCountdown }: MadlibsGameState ) =>
     ui
         .text( `Prompt #${( showcaseIndex + 1 )}` )
             .bold()
@@ -33,7 +33,7 @@ const votingPeriod = ( ui: UiBuilder, room: Room, { showcaseIndex, votingCountdo
         .text( `Voting ends in ${votingCountdown} seconds` )
             .marginTop( '1em' )
 
-const winScreen = ( ui: UiBuilder, room: Room ) =>
+const winScreen = ( ui: UiBuilder, room: IRoom ) =>
     ui
         .image( '', getFirstPlace( room ).getAvatar() )
             .withWidth( 128 ).withHeight( 128 )
@@ -58,7 +58,7 @@ const winScreen = ( ui: UiBuilder, room: Room ) =>
             .marginTop( '2em' )
             .italic();
 
-const mainUi = ( ui: UiBuilder, room: Room ) =>
+const mainUi = ( ui: UiBuilder, room: IRoom ) =>
     ui
         .text( 'Awaiting submissions' )
             .withSize( 38 )
@@ -66,7 +66,7 @@ const mainUi = ( ui: UiBuilder, room: Room ) =>
         .container()
             .horizontal()
             .withChildren( playerContainer =>
-                room.getPlayers().reduce( (subUi: UiBuilder, ply: Player ) => {
+                room.getPlayers().reduce( (subUi: UiBuilder, ply: IPlayer ) => {
                     return subUi
                         .container()
                         .vertical()
@@ -80,7 +80,7 @@ const mainUi = ( ui: UiBuilder, room: Room ) =>
             )
         );
 
-const playerTile = ( ply: Player ) =>
+const playerTile = ( ply: IPlayer ) =>
     UiBuilder.create()
         .image(ply.getName(), ply.getAvatar())
             .asCircular()

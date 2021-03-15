@@ -1,27 +1,27 @@
-import Room from "src/types/classes/Room";
 import { SplitTheRoomGameState, Phase, Task, PlayerVariable } from "./split-the-room.types";
-import Player from "src/types/classes/Player";
 import splitTheRoomPrompts from "./split-the-room.prompts";
+import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
+import { IPlayer } from "@cambox/common/types/interfaces/api/IPlayer";
 
-export const getCurrentPlayer = ( room: Room ) =>
+export const getCurrentPlayer = ( room: IRoom ) =>
     room.getState<SplitTheRoomGameState>().currentPlayer;
 
-export const isPositiveVoteMajority = ( room: Room ) => 
+export const isPositiveVoteMajority = ( room: IRoom ) => 
     getVotes( room ).filter( v => v.isYes ).length > getVotes( room ).filter( v => !v.isYes ).length;
 
-export const hasEveryoneVoted = ( room: Room ) => 
+export const hasEveryoneVoted = ( room: IRoom ) => 
     getVotes( room ).length === ( room.getPlayers().length - 1 );
 
-export const hasVoted = ( room: Room, player: Player ) =>
+export const hasVoted = ( room: IRoom, player: IPlayer ) =>
     getVotes( room ).some( v => v.player === player );
 
-export const getYesPercent = ( room: Room ) =>
+export const getYesPercent = ( room: IRoom ) =>
     `${Math.floor( ( getVoteSplit( room ).yes.length / getVotes( room ).length ) * 100 )}%`;
 
-export const getNoPercent = ( room: Room ) =>
+export const getNoPercent = ( room: IRoom ) =>
     `${Math.floor( ( getVoteSplit( room).no.length / getVotes( room ).length ) * 100 )}%`
 
-export const castVote = ( room: Room, player: Player, isYes: boolean ) => {
+export const castVote = ( room: IRoom, player: IPlayer, isYes: boolean ) => {
     const state = room.getState<SplitTheRoomGameState>();
     room.setState<SplitTheRoomGameState>({
         ...state,
@@ -36,21 +36,21 @@ export const castVote = ( room: Room, player: Player, isYes: boolean ) => {
     }
 }
 
-export const getVoteSplit = ( room: Room ) => 
+export const getVoteSplit = ( room: IRoom ) => 
     ({
         yes: getVotes( room ).filter( v => v.isYes ),
         no: getVotes( room ).filter( v => !v.isYes )
     });
 
-export const getNoVotes = ( room: Room ) => 
+export const getNoVotes = ( room: IRoom ) => 
     getVotes( room ).filter( v => !v.isYes );
 
-export const getVotes = ( room: Room ) => {
+export const getVotes = ( room: IRoom ) => {
     const { votes } = room.getState<SplitTheRoomGameState>();
     return votes;
 }
 
-export const beginPromptPhase = ( room: Room ) => {
+export const beginPromptPhase = ( room: IRoom ) => {
     room.registerRecurringTask( Task.PromptCooldown, () => {
         const state = room.getState<SplitTheRoomGameState>();
 
@@ -74,7 +74,7 @@ export const beginPromptPhase = ( room: Room ) => {
     }, 1000 );
 }
 
-export const beginVoting = ( room: Room ) => {
+export const beginVoting = ( room: IRoom ) => {
     const state = room.getState<SplitTheRoomGameState>();
     room.setState<SplitTheRoomGameState>({ ...state, phase: Phase.Voting });
 
@@ -91,7 +91,7 @@ export const beginVoting = ( room: Room ) => {
     }, 1000 );
 }
 
-export const showResults = ( room: Room ) => {
+export const showResults = ( room: IRoom ) => {
     const state = room.getState<SplitTheRoomGameState>();
     room.setState<SplitTheRoomGameState>({ ...state, phase: Phase.Results });
 
@@ -102,7 +102,7 @@ export const showResults = ( room: Room ) => {
     }, 8000 );
 }
 
-export const completeRound = ( room: Room ) => {
+export const completeRound = ( room: IRoom ) => {
     const { currentPlayer, promptIndex } = room.getState<SplitTheRoomGameState>();
     let nextIndex = room.getPlayers().findIndex( p => p === currentPlayer ) + 1;
 
@@ -131,15 +131,15 @@ export const completeRound = ( room: Room ) => {
     beginPromptPhase( room );
 }
 
-export const getBlankPrompt = ( room: Room ) =>
+export const getBlankPrompt = ( room: IRoom ) =>
     room.getState<SplitTheRoomGameState>().currentPrompt.text.replace( '^', '____' );
 
-export const getCompletedPrompt = ( room: Room ) => {
+export const getCompletedPrompt = ( room: IRoom ) => {
     const { currentPrompt, word } = room.getState<SplitTheRoomGameState>();
     return currentPrompt.text.replace( '^', word );
 }
 
-export const calculateScore = ( room: Room ) => {
+export const calculateScore = ( room: IRoom ) => {
     const maxPoints = 5000;
     const { yes, no } = getVoteSplit( room );
     return Math.floor( ( yes.length / ( yes.length + no.length ) ) * maxPoints );

@@ -1,0 +1,4 @@
+{
+    "apiBasePath": "https://cambox-games-api.herokuapp.com",
+    "websocketHost": "https://cambox-games-api.herokuapp.com"
+}

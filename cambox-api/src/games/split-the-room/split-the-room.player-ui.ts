@@ -1,11 +1,11 @@
 import UiBuilder from "src/types/classes/UiBuilder";
-import Room from "src/types/classes/Room";
 import { UiElement } from "@cambox/common/types/types/UiElement";
 import { SplitTheRoomGameState, Phase, Inputs } from "./split-the-room.types";
 import { getCurrentPlayer, isPositiveVoteMajority, getBlankPrompt } from "./split-the-room.logic";
-import Player from "src/types/classes/Player";
+import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
+import { IPlayer } from "@cambox/common/types/interfaces/api/IPlayer";
 
-export default ( ui: UiBuilder, room: Room, player: Player ): UiElement[] => {
+export default ( ui: UiBuilder, room: IRoom, player: IPlayer ): UiElement[] => {
     const state = room.getState<SplitTheRoomGameState>();
 
     return ( () => {
@@ -22,8 +22,8 @@ export default ( ui: UiBuilder, room: Room, player: Player ): UiElement[] => {
 
 const writingPromptPhase = ( 
     ui: UiBuilder, 
-    room: Room, 
-    player: Player, 
+    room: IRoom, 
+    player: IPlayer, 
     { currentPrompt: { text: prompt, question } }: SplitTheRoomGameState 
 ) =>
     ui
@@ -49,8 +49,8 @@ const writingPromptPhase = (
 
 const votingPhase = ( 
     ui: UiBuilder, 
-    room: Room,
-    player: Player,
+    room: IRoom,
+    player: IPlayer,
     { currentPrompt: { text: prompt, question } }: SplitTheRoomGameState 
 ) =>
     ui
@@ -81,7 +81,7 @@ const votingPhase = (
                     .bold()
         )
 
-const resultsPhase = ( ui: UiBuilder, room: Room ) =>
+const resultsPhase = ( ui: UiBuilder, room: IRoom ) =>
     ui
         .text( `${isPositiveVoteMajority( room ) ? 'YES' : 'NO'} wins!` )
             .withSize( 38 )

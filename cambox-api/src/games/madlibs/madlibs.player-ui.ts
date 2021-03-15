@@ -1,12 +1,12 @@
-import Room from "src/types/classes/Room";
-import Player from "src/types/classes/Player";
 import UiBuilder from "src/types/classes/UiBuilder";
 import { fillPrompt, getNextWordForPlayer, getFirstPlace, hasVoted } from "./madlibs.logic";
 import { UiListItem } from "@cambox/common/types/interfaces/ui";
 import { UiElement } from "@cambox/common/types/types/UiElement";
 import { MadlibsGameState, Phase, Inputs, PlayerVariable } from "./madlibs.types";
+import { IPlayer } from "@cambox/common/types/interfaces/api/IPlayer";
+import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
 
-export default ( room: Room, player: Player ): UiElement[] => {
+export default ( room: IRoom, player: IPlayer ): UiElement[] => {
     const state = room.getState<MadlibsGameState>();
 
     let ui = UiBuilder.create();
@@ -20,7 +20,7 @@ export default ( room: Room, player: Player ): UiElement[] => {
     }
 }
 
-const winScreen = ( player: Player, ui: UiBuilder, room: Room, { winScreenCountdown }: MadlibsGameState ) =>
+const winScreen = ( player: IPlayer, ui: UiBuilder, room: IRoom, { winScreenCountdown }: MadlibsGameState ) =>
     ui.if(
         () => getFirstPlace( room ) === player,
         then => then.text( 'You won!' ),
@@ -34,7 +34,7 @@ const winScreen = ( player: Player, ui: UiBuilder, room: Room, { winScreenCountd
         .withAlignment( 'center' )
         .marginTop( '2em' );
 
-const writingPeriod = ( player: Player, ui: UiBuilder, room: Room ) =>
+const writingPeriod = ( player: IPlayer, ui: UiBuilder, room: IRoom ) =>
     ui.if(
         () => getNextWordForPlayer( room, player ) === null,
         then => then.text( 'Waiting for other players to finish' ),
@@ -44,7 +44,7 @@ const writingPeriod = ( player: Player, ui: UiBuilder, room: Room ) =>
                 .input( Inputs.WordInput, 'text', '' )
     )
 
-const votingPeriod = ( player: Player, ui: UiBuilder, room: Room ) =>
+const votingPeriod = ( player: IPlayer, ui: UiBuilder, room: IRoom ) =>
     ui
         .if(
             () => !hasVoted( room, player ),
@@ -55,7 +55,7 @@ const votingPeriod = ( player: Player, ui: UiBuilder, room: Room ) =>
                     .bold()
                     .list( 'options' )
                     .withItems(
-                        room.getPlayers().map( ( ply: Player, idx: number ) => ({
+                        room.getPlayers().map( ( ply: IPlayer, idx: number ) => ({
                             id: idx,
                             prompt: fillPrompt( room, ply.get<string[]>( PlayerVariable.Answers ) )
                         }))

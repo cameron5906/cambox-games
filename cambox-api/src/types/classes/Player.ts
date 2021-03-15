@@ -1,10 +1,12 @@
 import { AuthToken } from "../interfaces/AuthToken";
-import { PlayerSocket } from "../types/PlayerSocket";
+import { PlayerSocket } from "../../../../cambox-common/types/types/PlayerSocket";
 import Room from "./Room";
+import { IPlayer } from '@cambox/common/types/interfaces/api/IPlayer';
+import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
 
-class Player {
+class Player implements IPlayer {
     private userData: AuthToken;
-    private room: Room;
+    private room: IRoom;
     private gameData: any;
     private socket: PlayerSocket;
 
@@ -15,7 +17,7 @@ class Player {
         this.gameData = {};
     }
 
-    setRoom(room: Room) {
+    setRoom( room: IRoom ) {
         this.room = room;
     }
 
@@ -44,7 +46,7 @@ class Player {
         return this.userData.imageUrl;
     }
 
-    getRoom(): Room | null {
+    getRoom(): IRoom | null {
         return this.room;
     }
 

@@ -1,10 +1,10 @@
-import Player from "src/types/classes/Player";
-import Room from "src/types/classes/Room";
 import { MadlibsGameState, PlayerVariable, Phase, Task } from "./madlibs.types";
 import madlibsPrompts from "./madlibs.prompts";
+import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
+import { IPlayer } from "@cambox/common/types/interfaces/api/IPlayer";
 
 /////Scoring//////
-export const getFirstPlace = ( room: Room ): Player => {
+export const getFirstPlace = ( room: IRoom ): IPlayer => {
     const { votes } = room.getState<MadlibsGameState>();
 
     return room.getPlayers().sort( ( p1, p2 ) =>
@@ -12,7 +12,7 @@ export const getFirstPlace = ( room: Room ): Player => {
     )[0];
 }
 
-export const recordVote = ( room: Room, from: Player, to: Player ) => {
+export const recordVote = ( room: IRoom, from: IPlayer, to: IPlayer ) => {
     const { votes } = room.getState<MadlibsGameState>();
     room.setState({
         votes: [ ...votes, { from, to } ]
@@ -23,22 +23,22 @@ export const recordVote = ( room: Room, from: Player, to: Player ) => {
     }
 }
 
-export const getVotesFor = ( room: Room, ply: Player ) => {
+export const getVotesFor = ( room: IRoom, ply: IPlayer ) => {
     const { votes } = room.getState<MadlibsGameState>();
     return votes.filter( v => v.to === ply );
 }
 
-export const hasVoted = ( room: Room, ply: Player ) => {
+export const hasVoted = ( room: IRoom, ply: IPlayer ) => {
     const { votes } = room.getState<MadlibsGameState>();
     return votes.some( p => p.from === ply );
 }
 
-export const incrementScore = ( ply: Player ) => {
+export const incrementScore = ( ply: IPlayer ) => {
     ply.set( PlayerVariable.Score, ply.get<number>(PlayerVariable.Score) + 1 );
 }
 
 ////Player state//////////
-export const getNextWordForPlayer = ( room: Room, player: Player ): string | null => {
+export const getNextWordForPlayer = ( room: IRoom, player: IPlayer ): string | null => {
     const { currentPrompt } = room.getState<MadlibsGameState>();
     const playerSubmissions = player.get<string[]>( PlayerVariable.Answers );
 
@@ -47,19 +47,19 @@ export const getNextWordForPlayer = ( room: Room, player: Player ): string | nul
 }
 
 /////Game state//////
-export const areAllAnswersSubmitted = ( room: Room ) => {
+export const areAllAnswersSubmitted = ( room: IRoom ) => {
     const { currentPrompt: { words } } = room.getState<MadlibsGameState>();
     return room.getPlayers().every( ply => 
         ply.get<string[]>( PlayerVariable.Answers ).length === words.length 
     );
 }
 
-export const areAllVotesSubmitted = ( room: Room ) => {
+export const areAllVotesSubmitted = ( room: IRoom ) => {
     const { votes } = room.getState<MadlibsGameState>();
     return votes.length === room.getPlayers().length;
 }
 
-export const startVotingPhase = ( room: Room ) => {
+export const startVotingPhase = ( room: IRoom ) => {
     room.setState({ 
         phase: Phase.VotingPeriod,
         votingCountdown: calculateVotingCountdown( room ) 
@@ -83,7 +83,7 @@ export const startVotingPhase = ( room: Room ) => {
     }, 1000 );
 }
 
-export const showWinner = ( room: Room ) => {
+export const showWinner = ( room: IRoom ) => {
     const { phase } = room.getState<MadlibsGameState>();
     if( phase !== Phase.VotingPeriod ) return;
 
@@ -104,7 +104,7 @@ export const showWinner = ( room: Room ) => {
     }, 1000 );
 }
 
-export const completeRound = ( room: Room ) => {
+export const completeRound = ( room: IRoom ) => {
     room.cancelRecurringTask( Task.WinScreenCountdown );
     room.getPlayers().forEach( ply => ply.set( PlayerVariable.Answers, [] ) );
     room.setState<MadlibsGameState>({
@@ -118,7 +118,7 @@ export const completeRound = ( room: Room ) => {
 }
 
 ////Util//////
-export const fillPrompt = ( room: Room, answers: string[] ) => {
+export const fillPrompt = ( room: IRoom, answers: string[] ) => {
     const { currentPrompt: { template } } = room.getState<MadlibsGameState>();
 
     return answers.reduce( ( prompt: string, answer: string ) =>
@@ -126,11 +126,11 @@ export const fillPrompt = ( room: Room, answers: string[] ) => {
     , template);
 }
 
-export const calculateVotingCountdown = ( room: Room ) => {
+export const calculateVotingCountdown = ( room: IRoom ) => {
     return calculateShowcaseTransition( room ) * room.getPlayers().length;
 }
 
-export const calculateShowcaseTransition = ( room: Room ) => {
+export const calculateShowcaseTransition = ( room: IRoom ) => {
     const { currentPrompt: { template } } = room.getState<MadlibsGameState>();
     return Math.floor( ( template.split(' ').length / 210 ) * 60 ) * 1000; //210 = average words per minute reading speed
 }

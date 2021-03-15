@@ -1,13 +1,13 @@
-import Player from "src/types/classes/Player";
+import { IPlayer } from "@cambox/common/types/interfaces/api/IPlayer";
 
 export interface SplitTheRoomGameState {
     currentPrompt: {
         text: string;
         question: string;
     };
-    currentPlayer: Player;
+    currentPlayer: IPlayer;
     word: string;
-    votes: { player: Player, isYes: boolean }[],
+    votes: { player: IPlayer, isYes: boolean }[],
     votingCooldown: number;
     promptCooldown: number;
     phase: Phase;

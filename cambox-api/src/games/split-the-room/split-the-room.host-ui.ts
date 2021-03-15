@@ -1,11 +1,11 @@
 import UiBuilder from "src/types/classes/UiBuilder";
-import Room from "src/types/classes/Room";
 import { UiElement } from "@cambox/common/types/types/UiElement";
 import { SplitTheRoomGameState, Phase } from "./split-the-room.types";
 import { getCurrentPlayer, getVotes, isPositiveVoteMajority, getVoteSplit, getCompletedPrompt, calculateScore, getYesPercent, getNoPercent } from "./split-the-room.logic";
 import { UiStyleProperty } from "@cambox/common/types/enums";
+import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
 
-export default ( ui: UiBuilder, room: Room ): UiElement[] => {
+export default ( ui: UiBuilder, room: IRoom ): UiElement[] => {
     const state = room.getState<SplitTheRoomGameState>();
 
     return (() => {
@@ -20,7 +20,7 @@ export default ( ui: UiBuilder, room: Room ): UiElement[] => {
     } )().build()
 }
 
-const writingPromptPhase = ( ui: UiBuilder, room: Room, { promptCooldown }: SplitTheRoomGameState ) =>
+const writingPromptPhase = ( ui: UiBuilder, room: IRoom, { promptCooldown }: SplitTheRoomGameState ) =>
     ui
         .container()
             .horizontal()
@@ -41,7 +41,7 @@ const writingPromptPhase = ( ui: UiBuilder, room: Room, { promptCooldown }: Spli
             .italic()
             .marginTop( '1.5em' );
 
-const votingPhase = ( ui: UiBuilder, room: Room, { votingCooldown, currentPrompt: { question } }: SplitTheRoomGameState ) =>
+const votingPhase = ( ui: UiBuilder, room: IRoom, { votingCooldown, currentPrompt: { question } }: SplitTheRoomGameState ) =>
     ui
         .text( getCompletedPrompt( room ) )
             .withSize( 30 )
@@ -73,7 +73,7 @@ const votingPhase = ( ui: UiBuilder, room: Room, { votingCooldown, currentPrompt
             .italic()
             .marginTop( '1em' )
 
-const resultsPhase = ( ui: UiBuilder, room: Room, { currentPlayer }: SplitTheRoomGameState ) =>
+const resultsPhase = ( ui: UiBuilder, room: IRoom, { currentPlayer }: SplitTheRoomGameState ) =>
     ui
         .text( `${isPositiveVoteMajority( room ) ? 'YES' : 'NO'} wins!` )
             .withSize( 30 )

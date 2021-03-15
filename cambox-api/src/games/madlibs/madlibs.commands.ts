@@ -1,11 +1,11 @@
-import Room from "src/types/classes/Room";
-import Player from "src/types/classes/Player";
 import { Command } from "@cambox/common/types/models/Command";
 import { UiInputSubmitCommand, UiClickCommand } from "@cambox/common/types/interfaces/ui";
 import { areAllAnswersSubmitted, hasVoted, recordVote, startVotingPhase } from "./madlibs.logic";
 import { Inputs, PlayerVariable } from "./madlibs.types";
+import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
+import { IPlayer } from "@cambox/common/types/interfaces/api/IPlayer";
 
-export const handleAnswerSubmission = ( room: Room, player: Player, { data }: Command<UiInputSubmitCommand> ) => {
+export const handleAnswerSubmission = ( room: IRoom, player: IPlayer, { data }: Command<UiInputSubmitCommand> ) => {
     if( data.id === Inputs.WordInput ) {
         console.log( `${player.getName()} submitted word: ${data.value}` );
         player.set<string[]>( 
@@ -19,7 +19,7 @@ export const handleAnswerSubmission = ( room: Room, player: Player, { data }: Co
     }
 }
 
-export const handlePlayerTyping = ( room: Room, player: Player ) => {
+export const handlePlayerTyping = ( room: IRoom, player: IPlayer ) => {
     player.set( PlayerVariable.Typing, true );
     room.registerDelayedTask(
         () => player.set( PlayerVariable.Typing, false ), 
@@ -28,7 +28,7 @@ export const handlePlayerTyping = ( room: Room, player: Player ) => {
     );
 }
 
-export const handleVote = ( room: Room, player: Player, { data }: Command<UiClickCommand> ) => {
+export const handleVote = ( room: IRoom, player: IPlayer, { data }: Command<UiClickCommand> ) => {
     if( hasVoted( room, player ) ) return; //Already voted this round
     
     const playerIndex = data.id.split( 'option_' )[1];

@@ -1,9 +1,9 @@
-import Player from "src/types/classes/Player";
+import { IPlayer } from "@cambox/common/types/interfaces/api/IPlayer";
 
 export interface MadlibsGameState {
     currentPrompt: Prompt;
     phase: Phase;
-    votes: { to: Player, from: Player }[];
+    votes: { to: IPlayer, from: IPlayer }[];
     showcaseIndex: number;
     votingCountdown: number;
     winScreenCountdown: number;

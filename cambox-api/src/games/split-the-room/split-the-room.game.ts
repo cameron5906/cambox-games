@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import Player from 'src/types/classes/Player';
-import { GameService } from 'src/types/interfaces/GameService';
+import { IGameService } from '@cambox/common/types/interfaces/api/IGameService';
 import { Command } from '@cambox/common/types/models/Command';
-import Room from 'src/types/classes/Room';
 import { UiElement } from '@cambox/common/types/types/UiElement';
 import { SplitTheRoomGameState, Phase, PlayerVariable } from './split-the-room.types';
 import splitTheRoomPlayerUi from './split-the-room.player-ui';
@@ -12,10 +10,12 @@ import splitTheRoomPrompts from './split-the-room.prompts';
 import { CommandType } from '@cambox/common/types/enums';
 import { getCurrentPlayer, beginPromptPhase } from './split-the-room.logic';
 import { handlePromptSubmission, handleVoteSubmission } from './split-the-room.commands';
+import { IRoom } from '@cambox/common/types/interfaces/api/IRoom';
+import { IPlayer } from '@cambox/common/types/interfaces/api/IPlayer';
 
 @Injectable()
-export class SplitTheRoomGame implements GameService {
-    onGameStart( room: Room ) {
+export class SplitTheRoomGame implements IGameService {
+    onGameStart( room: IRoom ) {
         room.setState<SplitTheRoomGameState>({
             currentPrompt: splitTheRoomPrompts[0],
             currentPlayer: room.getRandomPlayer(),
@@ -30,19 +30,19 @@ export class SplitTheRoomGame implements GameService {
         beginPromptPhase( room );
     }
 
-    onGameEnd( room: Room ) {
+    onGameEnd( room: IRoom ) {
 
     }
 
-    onPlayerJoin( room: Room, player: Player ) {
+    onPlayerJoin( room: IRoom, player: IPlayer ) {
         player.set( PlayerVariable.Score, 0 );
     }
 
-    onPlayerLeave( room: Room, player: Player ) {
+    onPlayerLeave( room: IRoom, player: IPlayer ) {
 
     }
 
-    onPlayerCommand( room: Room, player: Player, command: Command<any> ) {
+    onPlayerCommand( room: IRoom, player: IPlayer, command: Command<any> ) {
         const { phase } = room.getState<SplitTheRoomGameState>();
 
         if( phase === Phase.Voting ) {
@@ -60,15 +60,15 @@ export class SplitTheRoomGame implements GameService {
         }
     }
 
-    onHostCommand(room: Room, command: Command<any>) {
+    onHostCommand(room: IRoom, command: Command<any>) {
 
     }
 
-    async buildPlayerUi( room: Room, player: Player ): Promise<UiElement[]> {
+    async buildPlayerUi( room: IRoom, player: IPlayer ): Promise<UiElement[]> {
         return splitTheRoomPlayerUi( UiBuilder.create(), room, player );
     }
 
-    async buildHostUi( room: Room ): Promise<UiElement[]> {
+    async buildHostUi( room: IRoom ): Promise<UiElement[]> {
         return splitTheRoomHostUi( UiBuilder.create(), room );
     }
 }
