@@ -15,6 +15,12 @@ export const hasEveryoneVoted = ( room: Room ) =>
 export const hasVoted = ( room: Room, player: Player ) =>
     getVotes( room ).some( v => v.player === player );
 
+export const getYesPercent = ( room: Room ) =>
+    `${Math.floor( ( getVoteSplit( room ).yes.length / getVotes( room ).length ) * 100 )}%`;
+
+export const getNoPercent = ( room: Room ) =>
+    `${Math.floor( ( getVoteSplit( room).no.length / getVotes( room ).length ) * 100 )}%`
+
 export const castVote = ( room: Room, player: Player, isYes: boolean ) => {
     const state = room.getState<SplitTheRoomGameState>();
     room.setState<SplitTheRoomGameState>({
@@ -97,8 +103,13 @@ export const showResults = ( room: Room ) => {
 }
 
 export const completeRound = ( room: Room ) => {
-    const { currentPlayer, chosenPlayerIndex, promptIndex } = room.getState<SplitTheRoomGameState>();
-    let nextIndex = chosenPlayerIndex + 1 >= room.getPlayers().length ? chosenPlayerIndex + 1 : 0;
+    const { currentPlayer, promptIndex } = room.getState<SplitTheRoomGameState>();
+    let nextIndex = room.getPlayers().findIndex( p => p === currentPlayer ) + 1;
+
+    if( nextIndex >= room.getPlayers().length ) {
+        nextIndex = 0;
+    }
+
     const nextPlayer = room.getPlayers()[ nextIndex ];
 
     currentPlayer.set<number>( 
@@ -114,7 +125,6 @@ export const completeRound = ( room: Room ) => {
         word: '',
         votingCooldown: 30,
         promptCooldown: 30,
-        chosenPlayerIndex: nextIndex,
         promptIndex: 0
     });
 

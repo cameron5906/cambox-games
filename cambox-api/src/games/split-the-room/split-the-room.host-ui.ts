@@ -2,7 +2,7 @@ import UiBuilder from "src/types/classes/UiBuilder";
 import Room from "src/types/classes/Room";
 import { UiElement } from "@cambox/common/types/types/UiElement";
 import { SplitTheRoomGameState, Phase } from "./split-the-room.types";
-import { getCurrentPlayer, getVotes, isPositiveVoteMajority, getVoteSplit, getCompletedPrompt, calculateScore } from "./split-the-room.logic";
+import { getCurrentPlayer, getVotes, isPositiveVoteMajority, getVoteSplit, getCompletedPrompt, calculateScore, getYesPercent, getNoPercent } from "./split-the-room.logic";
 import { UiStyleProperty } from "@cambox/common/types/enums";
 
 export default ( ui: UiBuilder, room: Room ): UiElement[] => {
@@ -91,7 +91,7 @@ const resultsPhase = ( ui: UiBuilder, room: Room, { currentPlayer }: SplitTheRoo
                         .withWidth( 300 )
                         .withChildren( yesColumn =>
                             yesColumn
-                                .text( 'YES' )
+                                .text( `YES (${getYesPercent( room )})` )
                                     .withAlignment( 'center' )
                                     .bold()
                                     .underline()
@@ -115,7 +115,7 @@ const resultsPhase = ( ui: UiBuilder, room: Room, { currentPlayer }: SplitTheRoo
                         .withWidth( 300 )
                         .withChildren( noColumn =>
                             noColumn
-                                .text( 'NO' )
+                                .text( `NO (${getNoPercent( room )})` )
                                     .withAlignment( 'center' )
                                     .bold()
                                     .underline()
@@ -123,7 +123,7 @@ const resultsPhase = ( ui: UiBuilder, room: Room, { currentPlayer }: SplitTheRoo
                                 .container()
                                     .vertical()
                                     .withChildren( noPlayers =>
-                                        getVoteSplit( room ).yes.reduce( ( no: UiBuilder, vote ) =>
+                                        getVoteSplit( room ).no.reduce( ( no: UiBuilder, vote ) =>
                                             no.image( '', vote.player.getAvatar() )
                                                 .withWidth( 48 )
                                                 .withHeight( 48 )

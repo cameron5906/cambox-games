@@ -24,7 +24,6 @@ export class SplitTheRoomGame implements GameService {
             votingCooldown: 30,
             promptCooldown: 30,
             phase: Phase.WritingPrompt,
-            chosenPlayerIndex: 0,
             promptIndex: 0
         });
 
