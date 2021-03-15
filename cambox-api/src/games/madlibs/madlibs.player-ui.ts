@@ -65,6 +65,7 @@ const votingPeriod = ( player: Player, ui: UiBuilder, room: Room ) =>
                                     .withBorderColor( 'black' )
                                     .withBorderWidth( 2 )
                                     .padding( '0.5em' )
+                                    .marginBottom( '0.3em' )
                                     .withSize( 22 )
                                 .get<UiListItem>( 'list_item' )
                         )

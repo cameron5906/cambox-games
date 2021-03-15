@@ -132,5 +132,5 @@ export const calculateVotingCountdown = ( room: Room ) => {
 
 export const calculateShowcaseTransition = ( room: Room ) => {
     const { currentPrompt: { template } } = room.getState<MadlibsGameState>();
-    return Math.floor( ( template.split(' ').length / 210 ) * 60 ); //210 = average words per minute reading speed
+    return Math.floor( ( template.split(' ').length / 210 ) * 60 ) * 1000; //210 = average words per minute reading speed
 }
