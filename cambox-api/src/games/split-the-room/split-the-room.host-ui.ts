@@ -41,7 +41,7 @@ const writingPromptPhase = ( ui: UiBuilder, room: Room, { promptCooldown }: Spli
             .italic()
             .marginTop( '1.5em' );
 
-const votingPhase = ( ui: UiBuilder, room: Room, { currentPrompt: { question } }: SplitTheRoomGameState ) =>
+const votingPhase = ( ui: UiBuilder, room: Room, { votingCooldown, currentPrompt: { question } }: SplitTheRoomGameState ) =>
     ui
         .text( getCompletedPrompt( room ) )
             .withSize( 30 )
@@ -49,7 +49,7 @@ const votingPhase = ( ui: UiBuilder, room: Room, { currentPrompt: { question } }
         .text( question )
             .withSize( 26 )
             .withColor( '#1d3557' )
-            .marginBottom( '3em' )
+            .marginBottom( '1.5em' )
         .text( `${getVotes( room ).length}/${room.getPlayers().length} votes have been cast` )
             .withSize( 24 )
             .marginLeft( '3em' )
@@ -68,6 +68,10 @@ const votingPhase = ( ui: UiBuilder, room: Room, { currentPrompt: { question } }
                         .margin( '1em' )
                 , voters )
             )
+        .text( `${votingCooldown} seconds remaining` )
+            .withSize( 18 )
+            .italic()
+            .marginTop( '1em' )
 
 const resultsPhase = ( ui: UiBuilder, room: Room, { currentPlayer }: SplitTheRoomGameState ) =>
     ui

@@ -98,7 +98,7 @@ export const showResults = ( room: Room ) => {
 
 export const completeRound = ( room: Room ) => {
     const { currentPlayer, chosenPlayerIndex, promptIndex } = room.getState<SplitTheRoomGameState>();
-    let nextIndex = chosenPlayerIndex > room.getPlayers().length - 2 ? chosenPlayerIndex + 1 : 0;
+    let nextIndex = chosenPlayerIndex + 1 >= room.getPlayers().length ? chosenPlayerIndex + 1 : 0;
     const nextPlayer = room.getPlayers()[ nextIndex ];
 
     currentPlayer.set<number>( 
