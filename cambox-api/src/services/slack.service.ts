@@ -22,9 +22,13 @@ export class SlackService {
         }) as any;
         if( !ok || !user ) throw 'User not found';
 
+        let [ firstName, lastName ]: [ string, string ] = user.name.split( '.' );
+        firstName = firstName.substr( 0, 1 ).toUpperCase() + firstName.substr( 1 ).toLowerCase();
+        lastName = lastName.substr( 0, 1 ).toUpperCase() + lastName.substr( 1 ).toLowerCase();
+
         return {
-            firstName: user.real_name.split(' ')[0],
-            lastName: user.real_name.split(' ')[1],
+            firstName,
+            lastName,
             imageUrl: user.profile.image_192
         };
     }
