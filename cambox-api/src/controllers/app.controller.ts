@@ -168,7 +168,7 @@ export class AppController {
   ): Promise<ApiResponse<GameDetails[]>> {
     return {
       ok: true,
-      data: gamesList
+      data: this.gameService.getGameList()
     }
   }
 }

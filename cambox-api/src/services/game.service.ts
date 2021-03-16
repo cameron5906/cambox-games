@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { MadlibsGame } from 'src/games/madlibs/madlibs.game';
-import { SplitTheRoomGame } from 'src/games/split-the-room/split-the-room.game';
 import Player from 'src/types/classes/Player';
 import Room from 'src/types/classes/Room';
-import gamesList, { MADLIBS_ID, SPLIT_THE_ROOM_ID } from 'src/games/games.list';
+import gamesList from 'src/games/games.list';
+import { IGameService } from '@cambox/common/types/interfaces/api/IGameService';
+import * as fs from 'fs';
+import { GameDetails } from '@cambox/common/types/models/GameDetails';
+import * as path from 'path';
 
 @Injectable()
 export class GameService {
     private activeRooms: Room[];
 
     constructor(
-        private readonly madLibs: MadlibsGame,
-        private readonly splitTheRoom: SplitTheRoomGame
     ) {
         this.activeRooms = [];
     }
@@ -34,7 +34,7 @@ export class GameService {
         const room = this.activeRooms.find( room => room.getRoomCode() === roomCode );
         if( !room ) throw 'Room does not exist';
         
-        const gameDetails = gamesList.find( g => g.id === gameId );
+        const gameDetails = this.getGameList().find( g => g.id === gameId );
         if( !gameDetails ) throw 'Game does not exist';
 
         room.startGame( gameDetails, this.getGameHandler( gameId ) );
@@ -91,6 +91,18 @@ export class GameService {
         player.getRoom()?.onPlayerDisconnected( player );
     }
 
+    public getGameList(): GameDetails[] {
+        const gameDir = path.join( __dirname, '../', 'games' );
+        return fs.readdirSync( gameDir )
+            .filter( x => 
+                fs.lstatSync( path.join( gameDir, x ) ).isDirectory() &&
+                fs.existsSync( path.join( gameDir, x, 'manifest.json' ) )
+            )
+            .map( d =>
+                JSON.parse( fs.readFileSync( path.join( path.join( gameDir, d ), 'manifest.json' ) ).toString() ) as GameDetails
+            );
+    }
+
     /***
      * Generates a random Room code
      * @param length The amount of characters to generate
@@ -107,13 +119,9 @@ export class GameService {
         return buffer;
     }
 
-    private getGameHandler( id: string ) {
-        switch( id ) {
-            case MADLIBS_ID:
-                return this.madLibs;
-            case SPLIT_THE_ROOM_ID:
-                return this.splitTheRoom;
-        }
+    private getGameHandler( id: string ): IGameService {
+        const resolution = require( `../games/${id}/${id}.game.js` );
+        return new ( Object.values( resolution )[0] as any )() as any;
     }
 
     private async wait( ms: number ) {
