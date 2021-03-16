@@ -5,6 +5,7 @@ import { UploadService } from 'src/services/upload.service';
 import { FileInterceptor } from '@nestjs/platform-express/multer/interceptors/file.interceptor';
 import { Readable } from 'stream';
 import * as path from 'path';
+import { ApiResponse } from '@cambox/common/types/models/api';
 
 @Controller('games')
 export class GamesController {
@@ -14,7 +15,12 @@ export class GamesController {
     
     @Post( 'upload' )
     @UseInterceptors( FileInterceptor( 'file' ) ) 
-    async uploadGame( @UploadedFile() file: Express.Multer.File, @Token() userToken: AuthToken ) {
+    async uploadGame( @UploadedFile() file: Express.Multer.File, @Token() userToken: AuthToken ): Promise<ApiResponse<any>> {
+        if( path.extname( file.originalname ) !== '.zip' ) return {
+            ok: false,
+            error: 'Invalid game pack file type. Must be a ZIP file.'
+        };
+
         //Our consumers use streams and we have a buffer, so... add a resolver to pass around since streams can be read once
         const getStream = () => {
             const readable = new Readable();
