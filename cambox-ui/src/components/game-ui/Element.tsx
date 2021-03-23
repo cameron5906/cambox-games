@@ -1,10 +1,11 @@
+import { UiStyleProperty } from '@cambox/common/dist/types/enums/UiStyleProperty';
+import { UiListItem, UiButton, UiInput, UiList, UiText, UiImage, UiContainer, UiCanvas } from '@cambox/common/dist/types/interfaces/ui';
+import { UiStyle } from '@cambox/common/dist/types/interfaces/ui/UiStyle';
+import { CommandType } from '@cambox/common/dist/types/enums/CommandType';
+import { Command } from '@cambox/common/dist/types/models/Command';
+import { UiElement } from '@cambox/common/dist/types/types/UiElement';
 import React, { ChangeEvent, useState } from 'react';
-import { Command } from '@cambox/common/types/models/Command';
-import { UiStyleProperty } from '@cambox/common/types/enums/UiStyleProperty';
-import { UiButton, UiContainer, UiImage, UiInput, UiList, UiText, UiListItem } from '@cambox/common/types/interfaces/ui';
-import { UiStyle } from '@cambox/common/types/interfaces/ui/UiStyle';
-import { UiElement } from '@cambox/common/types/types/UiElement';
-import { CommandType } from '@cambox/common/types/enums/CommandType';
+import Drawpad from '../drawpad/Drawpad';
 
 
 type Props = {
@@ -126,9 +127,16 @@ const Element = ( { element, onCommand }: Props ) => {
                     )}
                 </div>
             );
+        case 'canvas':
+            return <Drawpad 
+                width={(element as UiCanvas).width} 
+                height={(element as UiCanvas).height}
+                instructions={(element as UiCanvas).instructions} 
+                backgroundColor="#FFF" 
+                allowDrawing={(element as UiCanvas).allowDraw}
+                onChange={b64 => onCommand({ type: CommandType.UiCanvasDrawing, data: { b64 } })}
+            />;
     }
-
-    return null;
 };
 
 export default Element;

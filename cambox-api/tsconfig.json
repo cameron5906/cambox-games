@@ -14,5 +14,7 @@
     "paths": {
       "@cambox/common/*": ["../cambox-common/*"]
     }
-  }
+  },
+  "exclude": [ "src/games" ],
+  "include": [ "src" ]
 }

@@ -57,15 +57,15 @@ html, body {
   background-color: #f1faee;
 }
 
-p, span {
-  font-family: 'robotothin';
+* {
+  box-sizing: border-box;
 }
 
 h4 {
   font-family: 'robotomedium';
 }
 
-span {
+p, span {
   font-family: 'robotoregular';
   font-weight: 200;
 }
@@ -80,6 +80,12 @@ span {
 
 .underline {
   text-decoration: underline;
+}
+
+code {
+  background-color: rgba( 0, 0, 0, 0.2 );
+  padding: 0.3em;
+  border-radius: 0.3em;
 }
 
 input {

@@ -22,7 +22,7 @@ class Player implements IPlayer {
     }
 
     getName() {
-        return this.userData.firstName;
+        return this.userData.name;
     }
 
     isHosting() {

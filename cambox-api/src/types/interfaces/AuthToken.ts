@@ -1,6 +1,9 @@
+import { SocialNetwork } from "@cambox/common/types/types";
+
 export interface AuthToken {
-    firstName: string;
-    lastName: string;
+    platform: SocialNetwork;
+    id: string;
+    name: string;
     imageUrl: string;
     roomCode?: string;
     isHost?: boolean;

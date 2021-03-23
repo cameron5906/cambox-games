@@ -1,3 +1,6 @@
+import { SocialNetwork } from "../../../types";
+
 export interface AuthenticationPayload {
-    email: string;
+    platform: SocialNetwork;
+    accessToken: string;
 }

@@ -5,3 +5,4 @@ export * from './UiList';
 export * from './UiText';
 export * from './UiImage';
 export * from './UiListItem';
+export * from './UiCanvas';

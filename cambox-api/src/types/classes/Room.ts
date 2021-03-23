@@ -5,6 +5,8 @@ import { GameState } from "../interfaces/GameState";
 import Player from "./Player";
 import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
 import { IPlayer } from "@cambox/common/types/interfaces/api/IPlayer";
+import got from "got";
+import UiBuilder from "@cambox/common/util/UiBuilder";
 
 class Room implements IRoom {    
     private roomCode: string;
@@ -15,6 +17,7 @@ class Room implements IRoom {
 
     private gameState: GameState | null;
     private gameHandler: IGameService | null;
+    private lastHttpRequestTime: Date | null;
 
     constructor( roomCode: string ) {
         this.roomCode = roomCode;
@@ -29,6 +32,7 @@ class Room implements IRoom {
     public addPlayer( player: Player ) {
         this.players.push( player );
         this.sendPlayerRoster();
+        this.sendUi();
     }
     
     public ready() {
@@ -85,9 +89,9 @@ class Room implements IRoom {
         return this.roomCode;
     }
 
-    public setState<T>( gameState: T ) {
+    public setState<T>( gameState: T, hostInitiated: boolean = false ) {
         this.gameState = { ...(this.gameState || {}), ...gameState };
-        this.sendUi();
+        this.sendUi( !hostInitiated );
     }
 
     public getState<T>(): T {
@@ -138,6 +142,37 @@ class Room implements IRoom {
         }
     }
 
+    public async httpGet(url: string, headers?: Object): Promise<any> {
+        if( !this.canPerformHttpRequest() ) throw 'HTTP request rate limit exceeded';
+
+        const response = await got.get( url, {
+            headers: headers as any,
+            responseType: 'json'
+        } );
+
+        this.lastHttpRequestTime = new Date;
+
+        return response.body;
+    }
+
+    public async httpPost(url: string, payload: any, headers?: Object): Promise<any> {
+        if( !this.canPerformHttpRequest() ) throw 'HTTP request rate limit exceeded';
+        
+        const response = await got.post( url, {
+            headers: headers as any,
+            json: payload,
+            responseType: 'json'
+        } );
+
+        this.lastHttpRequestTime = new Date;
+
+        return response.body;
+    }
+
+    private canPerformHttpRequest() {
+        return !this.lastHttpRequestTime || ( Date.now() - this.lastHttpRequestTime.getTime() ) > 1000;
+    }
+
     private sendPlayerRoster() {
         for( const player of this.players ) {
             player.getSocket()?.emit( 
@@ -152,14 +187,20 @@ class Room implements IRoom {
         }
     }
 
-    private async sendUi() {
+    private async sendUi( includeHost: boolean = true ) {
         if( !this.gameHandler || !this.gameState ) return;
 
         for( const player of this.players ) {
+            const ui = UiBuilder.create();
+
             if( player.isHosting() ) {
-                player.getSocket()?.emit( 'ui', await this.gameHandler.buildHostUi( this ) );
+                if( includeHost ) {
+                    this.gameHandler.buildHostUi( this, ui );
+                    player.getSocket()?.emit( 'ui', ui.build() );
+                }
             } else {
-                player.getSocket()?.emit( 'ui', await this.gameHandler.buildPlayerUi( this, player ) );
+                this.gameHandler.buildPlayerUi( this, player, ui );
+                player.getSocket()?.emit( 'ui', ui.build() );
             }
         }
     }

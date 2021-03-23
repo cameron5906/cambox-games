@@ -53,4 +53,17 @@
         width: 10em;
         align-self: center;
     }
+
+    .facebook-button {
+        display: block;
+        background-image: url('assets/facebook.png');
+        width: 311px;
+        height: 50px;
+        box-shadow: none;
+        zoom: 0.7;
+        margin: auto auto;
+        border-radius: 0.5em;
+        overflow: hidden;
+        margin-bottom: 0.8em;
+    }
 }

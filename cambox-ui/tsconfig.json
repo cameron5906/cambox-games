@@ -21,7 +21,6 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
-  ],
-  "extends": "./tsconfig-overrides.json"
+    "./src/**/*.ts"
+  ]
 }

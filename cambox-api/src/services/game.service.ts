@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import Player from 'src/types/classes/Player';
 import Room from 'src/types/classes/Room';
-import gamesList from 'src/games/games.list';
 import { IGameService } from '@cambox/common/types/interfaces/api/IGameService';
 import * as fs from 'fs';
 import { GameDetails } from '@cambox/common/types/models/GameDetails';
 import * as path from 'path';
+import { IRoom } from '@cambox/common/types/interfaces/api/IRoom';
 
 @Injectable()
 export class GameService {
-    private activeRooms: Room[];
+    private activeRooms: IRoom[];
 
     constructor(
     ) {
@@ -120,7 +120,9 @@ export class GameService {
     }
 
     private getGameHandler( id: string ): IGameService {
-        const resolution = require( `../games/${id}/${id}.game.js` );
+        const path = `../games/${id}/index.js`;
+        delete require.cache[require.resolve( path )]
+        const resolution = require( path );
         return new ( Object.values( resolution )[0] as any )() as any;
     }
 

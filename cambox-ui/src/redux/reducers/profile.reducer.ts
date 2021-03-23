@@ -1,13 +1,14 @@
 import { AnyAction } from "redux";
 import { ProfileState } from "../../types/interfaces/state/ProfileState";
 import { SET_AUTH_TOKEN } from "../actions/auth.actions";
-import { SET_PROFILE_DETAILS } from "../actions/profile.actions";
+import { LOAD_DEVELOPED_GAMES, LOAD_DEV_KEY, SET_PROFILE_DETAILS } from "../actions/profile.actions";
 
 const defaultState: ProfileState = {
     authToken: null,
-    firstName: '',
+    name: '',
     imageUrl: '',
-    lastAuthenticatedEmail: localStorage.getItem( 'email' ) || ''
+    developerKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    games: []
 }
 
 export default ( state: ProfileState = defaultState, action: AnyAction ): ProfileState => {
@@ -16,7 +17,7 @@ export default ( state: ProfileState = defaultState, action: AnyAction ): Profil
             const profileDetails = action.payload;
             return {
                 ...state,
-                firstName: profileDetails.firstName,
+                name: profileDetails.name,
                 imageUrl: profileDetails.imageUrl
             }
         case SET_AUTH_TOKEN:
@@ -24,6 +25,16 @@ export default ( state: ProfileState = defaultState, action: AnyAction ): Profil
             return {
                 ...state,
                 authToken: authToken.token
+            }
+        case LOAD_DEV_KEY:
+            return {
+                ...state,
+                developerKey: action.payload.key
+            }
+        case LOAD_DEVELOPED_GAMES:
+            return {
+                ...state,
+                games: action.payload.games
             }
     }
 

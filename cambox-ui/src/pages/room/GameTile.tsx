@@ -9,7 +9,7 @@ type Props = GameDetails & {
 export default ( { name, iconUrl, description, id, onSelect }: Props ) => {
     return (
         <div className="game-tile--container" onClick={() => onSelect( id )}>
-            <img className="image" src={iconUrl} />
+            <img className="image" src={`http://localhost:3001/games/${id}/icon`} />
             <p className="name">{name}</p>
         </div>
     );

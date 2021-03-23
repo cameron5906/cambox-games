@@ -1,15 +1,11 @@
-import { UiButton, UiContainer, UiImage, UiInput, UiList, UiText, UiListItem } from "@cambox/common/types/interfaces/ui";
-import { UiElement } from "@cambox/common/types/types/UiElement";
-import { UiStyleProperty } from "@cambox/common/types/enums";
-import { UiType } from '@cambox/common/types/types/UiType';
+import { UiStyleProperty } from "../types/enums";
+import { UiCanvasInstructionType } from "../types/enums/UiCanvasInstructionType";
+import { UiText, UiButton, UiList, UiListItem, UiInput, UiImage, UiCanvas, UiContainer } from "../types/interfaces/ui";
+import { UiElement, UiType } from "../types/types";
 
 class UiBuilder {
-    private lastElement: UiElement | null = null;
-    private elements: UiElement[] = [];
-
-    constructor() {
-        
-    }
+    protected lastElement: UiElement | null = null;
+    protected elements: UiElement[] = [];
 
     public static create(): UiBuilder {
         return new UiBuilder();
@@ -48,6 +44,12 @@ class UiBuilder {
     public image( id: string, url: string ): UiBuilder {
         const imageElement: UiImage = { id, type: 'image', url };
         this.addElement( imageElement );
+        return this;
+    }
+
+    public canvas( id: string, width: number, height: number ): UiBuilder {
+        const canvasElement: UiCanvas = { id, type: 'canvas', width, height, instructions: [], allowDraw: false };
+        this.addElement( canvasElement );
         return this;
     }
 
@@ -154,11 +156,21 @@ class UiBuilder {
     }
 
     public scale( amount: number ): UiBuilder {
-        return this.withStyle( UiStyleProperty.Transform, `scale(${amount})` );
+        if( this.lastElement?.type === 'canvas' ) {
+            this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.Scale, amount });
+            return this;
+        } else {
+            return this.withStyle( UiStyleProperty.Transform, `scale(${amount})` );
+        }
     }
 
     public rotate( amount: number ): UiBuilder {
-        return this.withStyle( UiStyleProperty.Transform, `rotate(${amount}deg)` );
+        if( this.lastElement?.type === 'canvas' ) {
+            this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.Rotate, amount });
+            return this;
+        } else {
+            return this.withStyle( UiStyleProperty.Transform, `rotate(${amount}deg)` );
+        }
     }
 
     public bold(): UiBuilder {
@@ -172,6 +184,87 @@ class UiBuilder {
     public italic(): UiBuilder {
         return this.addClass( 'italic' );
     }
+
+    //#region Canvas
+    public allowDrawing( value: boolean = true ): UiBuilder {
+        this.getCanvasElement().allowDraw = value;
+        return this;
+    }
+
+    public drawText( content: string ): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.DrawText, content });
+        return this;
+    }
+
+    public drawRect( x: number, y: number, width: number, height: number ): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.DrawRect, x, y, width, height });
+        return this;
+    }
+
+    public drawImage( content: string ): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.DrawImage, content });
+        return this;
+    }
+
+    public moveTo( x: number, y: number ): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.MoveTo, x, y });
+        return this;
+    }
+
+    public lineTo( x: number, y: number ): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.LineTo, x, y });
+        return this;
+    }
+
+    public beginPath(): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.BeginPath });
+        return this;
+    }
+
+    public endPath(): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.EndPath });
+        return this;
+    }
+
+    public stroke(): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.Stroke });
+        return this;
+    }
+
+    public fill(): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.Fill });
+        return this;
+    }
+
+    public translate( x: number, y: number ): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.Translate, x, y });
+        return this;
+    }
+
+    public withStrokeSize( amount: number ): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.StrokeSize, amount });
+        return this;
+    }
+
+    public withStrokeStyle( content: string ): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.StrokeStyle, content });
+        return this;
+    }
+
+    public withFillStyle( content: string ): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.FillStyle, content });
+        return this;
+    }
+
+    public clear(): UiBuilder {
+        this.getCanvasElement().instructions.push({ type: UiCanvasInstructionType.Clear });
+        return this;
+    }
+
+    private getCanvasElement(): UiCanvas {
+        return this.lastElement as UiCanvas;
+    }
+    //#endregion
 
     public withChildren( getChildren: ( children: UiBuilder ) => UiBuilder ): UiBuilder {
         if( !this.lastElement ) throw 'No elements have been added';

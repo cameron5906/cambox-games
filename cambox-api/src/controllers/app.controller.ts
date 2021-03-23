@@ -1,11 +1,9 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { Token } from 'src/decorators/token.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { GameService } from 'src/services/game.service';
 import { SecurityService } from 'src/services/security.service';
-import { SlackService } from 'src/services/slack.service';
 import { AuthToken } from 'src/types/interfaces/AuthToken';
-import { SlackUser } from 'src/types/interfaces/SlackUser';
 import { GameDetails } from '@cambox/common/types/models/GameDetails';
 import { 
   ApiResponse, 
@@ -16,41 +14,43 @@ import {
   JoinRoomPayload, 
   StartGamePayload
 } from '@cambox/common/types/models/api';
-import gamesList from 'src/games/games.list';
+import { AuthenticationService } from 'src/services/authentication.service';
+import { UserService } from 'src/services/user.service';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly gameService: GameService,
-    private readonly slackService: SlackService,
-    private readonly securityService: SecurityService
+    private readonly securityService: SecurityService,
+    private readonly authenticationService: AuthenticationService,
+    private readonly userService: UserService
   ) {}
 
   @Post('authenticate')
   async authenticate( 
-    @Body() { email }: AuthenticationPayload 
+    @Body() { platform, accessToken }: AuthenticationPayload
   ): Promise<ApiResponse<AuthenticateResponseData>> {
     try {
-      const { firstName, lastName, imageUrl }: SlackUser = await this.slackService.getUserProfileFromEmail( email );
-      const token = this.securityService.generateToken({
-        firstName,
-        lastName,
-        imageUrl
-      });
+      const [userInfo, token ] = await this.authenticationService.authenticate( platform, accessToken );
+
+      if(!(await this.userService.userExists( platform, userInfo.userId ) ) ) {
+        console.log('Creating user');
+        await this.userService.createUser( platform, userInfo.email, userInfo.userId, userInfo.name, userInfo.avatarUrl );
+      } else {
+        console.log('User exists');
+      }
 
       return { 
         ok: true, 
         data: { 
-          token, 
-          firstName, 
-          lastName, 
-          imageUrl 
+          token
         } 
       };
     } catch( ex ) {
+      console.log( ex );
       return { 
         ok: false, 
-        error: 'Failed to authenticate your Slack profile' 
+        error: typeof( ex ) === 'object' ? 'Failed to authenticate' : ex 
       };
     }
   }

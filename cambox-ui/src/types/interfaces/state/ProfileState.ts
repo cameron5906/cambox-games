@@ -1,6 +1,9 @@
+import { GameDetails } from "@cambox/common/types/models/GameDetails";
+
 export interface ProfileState {
     authToken: string | null;
-    lastAuthenticatedEmail: string;
-    firstName: string;
+    name: string;
     imageUrl: string;
+    developerKey: string;
+    games: GameDetails[];
 }

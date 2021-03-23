@@ -5,12 +5,14 @@ import {
     JoinResponseData
 } from '@cambox/common/types/models/api';
 import { GameDetails } from '@cambox/common/types/models/GameDetails';
+import { SocialNetwork } from '@cambox/common/types/types';
 import { apiBasePath } from '../settings.json';
 
 class ApiService {
-    async authenticate( email: string ): Promise<ApiResponse<AuthenticateResponseData>> {
+    async authenticate( platform: SocialNetwork, accessToken: string ): Promise<ApiResponse<AuthenticateResponseData>> {
         return await this.post( 'authenticate', {
-            email
+            platform,
+            accessToken
         } );
     }
 
@@ -38,6 +40,14 @@ class ApiService {
 
     async getGames(): Promise<ApiResponse<GameDetails[]>> {
         return this.get( 'games' );
+    }
+
+    async getDeveloperKey(): Promise<ApiResponse<{ key: string }>> {
+        return this.get( 'user/key' );
+    }
+
+    async getDevelopedGames(): Promise<ApiResponse<{ games: GameDetails[] }>> {
+        return this.get( 'developer/games' );
     }
 
     private async post<T>( endpoint: string, body?: any ): Promise<T> {

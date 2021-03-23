@@ -24,23 +24,22 @@ export class ZipService {
                 .on( 'entry', ( entry: unzip.Entry ) => {
                     if( entry.type === 'File' && entry.path.indexOf( `${basePath}/` ) === 0 ) {
                         if( !exclude.some( e => entry.path.includes( e ) ) ) {
-                            entries.push( entry );
+                            let entryPath = path.join( extractionPath, entry.path.substr( basePath.length + 1 ) );
+                        
+                            console.log( `Extracting ${entryPath}` );
+                            
+                            const relDir = path.join( entryPath, '../' );
+                            
+                            mkdirp( relDir ).then( () => {
+                                entry.pipe( fs.createWriteStream( entryPath ) );
+                            } );
                         }
+                    } else {
+                        entry.autodrain();
                     }
-                    entry.autodrain();
                 } )
                 .on( 'error', reject )
                 .on( 'close', async() => {
-                    for( const entry of entries ) {
-                        let entryPath = path.join( extractionPath, entry.path.substr( basePath.length + 1 ) );
-                        
-                        console.log( `Extracting ${entryPath}` );
-                        
-                        const relDir = path.join( entryPath, '../' );
-                        
-                        await mkdirp( relDir );
-                        await this.syncWriteToFile( entry, entryPath );
-                    }
                     resolve( extractionPath );
                 } );
         } );
@@ -95,15 +94,6 @@ export class ZipService {
             stream.on( 'data', data => chunks.push( data ) );
             stream.on( 'error', reject );
             stream.on( 'end', () => { resolve( Buffer.concat( chunks ).toString( 'utf8' ) ) });
-        } );
-    }
-
-    private async syncWriteToFile( stream: Readable, destination: string ) {
-        return new Promise( resolve => {
-            stream.pipe( fs.createWriteStream( destination ) )
-                .on( 'close', () => {
-                    resolve();
-                } );
         } );
     }
 }

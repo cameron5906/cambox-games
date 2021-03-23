@@ -1,8 +1,15 @@
+import { SocialNetwork } from '@cambox/common/types/types';
+
 export const AUTHENTICATE = 'AUTHENTICATE';
-export const authenticate = ( email: string ) => ({
+export const authenticate = ( platform: SocialNetwork, accessToken: string ) => ({
     type: AUTHENTICATE,
-    payload: { email }
+    payload: { platform, accessToken }
 });
+
+export const CHECK_LOGGED_IN = 'CHECK_LOGGED_IN';
+export const checkIfLoggedIn = () => ({
+    type: CHECK_LOGGED_IN
+})
 
 export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 export const setAuthToken = ( token: string ) => ({
