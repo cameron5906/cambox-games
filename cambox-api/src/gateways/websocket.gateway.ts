@@ -7,7 +7,7 @@ import { Command } from '@cambox/common';
 import { PlayerSocket } from '@cambox/common/dist/types';
 
 @WebSocketGateway({ transports: [ 'websocket', 'polling' ] } )
-export class PlayerGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   constructor(
     private readonly gameService: GameService,

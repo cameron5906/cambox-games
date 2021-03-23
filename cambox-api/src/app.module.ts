@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './controllers/app.controller';
-import { PlayerGateway } from './gateways/player.gateway';
+import { WebsocketGateway } from './gateways/websocket.gateway';
 import { GameService } from './services/game.service';
 import { SecurityService } from './services/security.service';
 import { GamesController } from './controllers/games.controller';
@@ -40,7 +40,7 @@ import { GamesService } from './services/games.service';
   providers: [
     AuthenticationService,
     GamesService,
-    PlayerGateway,
+    WebsocketGateway,
     GameService,
     ZipService,
     UploadService,
