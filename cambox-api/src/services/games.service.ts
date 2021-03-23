@@ -1,4 +1,3 @@
-import { GameDetails } from '@cambox/common/types/models/GameDetails';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -7,6 +6,7 @@ import { User } from 'src/data/entities/User.entity';
 import { GameCollaborator } from 'src/data/entities/GameCollaborator';
 import * as fs from 'fs';
 import * as path from 'path';
+import { GameDetails } from '@cambox/common';
 
 @Injectable()
 export class GamesService {

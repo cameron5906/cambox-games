@@ -5,11 +5,11 @@ import { UploadService } from 'src/services/upload.service';
 import { FileInterceptor } from '@nestjs/platform-express/multer/interceptors/file.interceptor';
 import { Readable } from 'stream';
 import * as path from 'path';
-import { ApiResponse } from '@cambox/common/types/models/api';
 import { createReadStream, existsSync, readFileSync } from 'fs';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { UserService } from 'src/services/user.service';
 import { GamesService } from 'src/services/games.service';
+import { ApiResponse } from '@cambox/common';
 
 @Controller('games')
 export class GamesController {

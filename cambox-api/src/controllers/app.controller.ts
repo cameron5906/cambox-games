@@ -4,18 +4,9 @@ import { AuthGuard } from 'src/guards/auth.guard';
 import { GameService } from 'src/services/game.service';
 import { SecurityService } from 'src/services/security.service';
 import { AuthToken } from 'src/types/interfaces/AuthToken';
-import { GameDetails } from '@cambox/common/types/models/GameDetails';
-import { 
-  ApiResponse, 
-  AuthenticateResponseData, 
-  AuthenticationPayload, 
-  CreateRoomResponseData, 
-  JoinResponseData, 
-  JoinRoomPayload, 
-  StartGamePayload
-} from '@cambox/common/types/models/api';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { UserService } from 'src/services/user.service';
+import { AuthenticationPayload, ApiResponse, AuthenticateResponseData, JoinRoomPayload, JoinResponseData, CreateRoomResponseData, StartGamePayload, GameDetails } from '@cambox/common';
 
 @Controller()
 export class AppController {

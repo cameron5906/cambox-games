@@ -1,7 +1,6 @@
-import { IGameService, IPlayer, IRoom } from '@cambox/common/dist/types/interfaces/api';
-import { Command } from '@cambox/common/dist/types/models/Command';
-import { UiElement } from '@cambox/common/dist/types/types/UiElement';
-import UiBuilder from '@cambox/common/dist/util/UiBuilder';
+import { IGameService, IRoom, IPlayer } from "@cambox/common/dist/types/interfaces/api";
+import { Command } from "@cambox/common/dist/types/models";
+import UiBuilder from "@cambox/common/dist/util/UiBuilder";
 
 class TemplateGame implements IGameService {
     onGameStart(room: IRoom) {

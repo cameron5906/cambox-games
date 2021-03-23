@@ -1,4 +1,4 @@
-import { SocialNetwork } from "@cambox/common/types/types";
+import { SocialNetwork } from "@cambox/common/dist/types";
 
 export interface AuthToken {
     platform: SocialNetwork;

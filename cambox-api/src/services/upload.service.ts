@@ -4,8 +4,7 @@ import { Readable } from 'stream';
 import * as path from 'path';
 import * as fs from 'fs';
 import { glob } from 'glob';
-import { GameDetails } from '@cambox/common/types/models/GameDetails';
-
+import { GameDetails } from '@cambox/common';
 @Injectable()
 export class UploadService {
     constructor(

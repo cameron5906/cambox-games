@@ -1,4 +1,4 @@
-import { ApiResponse } from '@cambox/common/types/models/api';
+import { ApiResponse } from '@cambox/common';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { Token } from 'src/decorators/token.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
