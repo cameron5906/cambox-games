@@ -1,11 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import Player from 'src/types/classes/Player';
-import Room from 'src/types/classes/Room';
-import { IGameService } from '@cambox/common/types/interfaces/api/IGameService';
+import { IRoom, IGameService } from "@cambox/common/interfaces";
+import { GameDetails } from "@cambox/common/models/GameDetails";
+import { Injectable } from "@nestjs/common";
+import * as path from "path";
 import * as fs from 'fs';
-import { GameDetails } from '@cambox/common/types/models/GameDetails';
-import * as path from 'path';
-import { IRoom } from '@cambox/common/types/interfaces/api/IRoom';
+import Player from "src/types/classes/Player";
+import Room from "src/types/classes/Room";
 
 @Injectable()
 export class GameService {

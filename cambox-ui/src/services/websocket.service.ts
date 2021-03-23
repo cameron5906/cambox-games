@@ -1,13 +1,11 @@
 import io from 'socket.io-client';
-import { GameDetails } from '@cambox/common/types/models/GameDetails';
-import { UiElement } from '@cambox//common/types/types/UiElement';
 import { setGameDetails } from '../redux/actions/game.actions';
 import { setPlayerRoster, setRoomReady } from '../redux/actions/room.actions';
 import { setUi } from '../redux/actions/ui.actions';
 import store from '../redux/store';
 import { Player } from '../types/interfaces/room/Player';
-import { Command } from '@cambox/common/types/models/Command';
 import { websocketHost } from '../settings.json';
+import { Command, UiElement, GameDetails } from '@cambox/common';
 
 class WebsocketService {
     private socket: SocketIOClient.Socket;

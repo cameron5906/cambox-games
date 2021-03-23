@@ -5,8 +5,8 @@ import {
     UiInput, 
     UiList, 
     UiText, 
-    UiListItem 
-} from "../interfaces/ui";
-import { UiCanvas } from "../interfaces/ui/elements/UiCanvas";
+    UiListItem,
+    UiCanvas
+} from "./elements";
 
 export type UiElement = UiButton | UiContainer | UiInput | UiList | UiText | UiImage | UiListItem | UiCanvas;

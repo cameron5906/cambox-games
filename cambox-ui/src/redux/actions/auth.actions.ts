@@ -1,4 +1,4 @@
-import { SocialNetwork } from '@cambox/common/types/types';
+import { SocialNetwork } from "@cambox/common/dist/types";
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const authenticate = ( platform: SocialNetwork, accessToken: string ) => ({

@@ -1,7 +1,7 @@
 import { IPlayer } from "./IPlayer";
 import { IGameService } from "./IGameService";
-import { Command } from "../../models/Command";
-import { GameDetails } from "../../models/GameDetails";
+import { Command } from "../commands";
+import { GameDetails } from "../models/GameDetails";
 
 export interface IRoom {
     /**

@@ -1,9 +1,10 @@
-import { UiStyleProperty } from "../types/enums";
-import { UiCanvasInstructionType } from "../types/enums/UiCanvasInstructionType";
-import { UiText, UiButton, UiList, UiListItem, UiInput, UiImage, UiCanvas, UiContainer } from "../types/interfaces/ui";
-import { UiElement, UiType } from "../types/types";
+import { UiText, UiButton, UiList, UiListItem, UiInput, UiImage, UiCanvas, UiContainer } from "./elements";
+import { UiCanvasInstructionType } from "./UiCanvasInstructionType";
+import { UiElement } from "./UiElement";
+import { UiStyleProperty } from "./UiStyleProperty";
+import { UiType } from "./UiType";
 
-class UiBuilder {
+export class UiBuilder {
     protected lastElement: UiElement | null = null;
     protected elements: UiElement[] = [];
 
@@ -315,5 +316,3 @@ class UiBuilder {
         return this;
     }
 }
-
-export default UiBuilder;

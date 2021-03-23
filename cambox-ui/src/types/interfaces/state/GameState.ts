@@ -1,4 +1,4 @@
-import { GameDetails } from "@cambox/common/types/models/GameDetails";
+import { GameDetails } from "@cambox/common";
 
 export interface GameState {
     details: GameDetails | null;

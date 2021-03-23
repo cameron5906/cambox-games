@@ -1,11 +1,5 @@
-import {
-    ApiResponse,
-    AuthenticateResponseData,
-    CreateRoomResponseData,
-    JoinResponseData
-} from '@cambox/common/types/models/api';
-import { GameDetails } from '@cambox/common/types/models/GameDetails';
-import { SocialNetwork } from '@cambox/common/types/types';
+import { ApiResponse, AuthenticateResponseData, CreateRoomResponseData, JoinResponseData, GameDetails } from '@cambox/common';
+import { SocialNetwork } from '@cambox/common/dist/types';
 import { apiBasePath } from '../settings.json';
 
 class ApiService {

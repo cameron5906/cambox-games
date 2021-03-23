@@ -1,4 +1,4 @@
-import { GameDetails } from '@cambox/common/types/models/GameDetails';
+import { GameDetails } from '@cambox/common';
 import { AppState } from './AppState';
 import { GameState } from "./GameState";
 import { ProfileState } from "./ProfileState";

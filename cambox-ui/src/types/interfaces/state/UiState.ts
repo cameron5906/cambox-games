@@ -1,4 +1,4 @@
-import { UiElement } from "@cambox/common/types/types/UiElement";
+import { UiElement } from "@cambox/common";
 
 export interface UiState {
     elements: UiElement[];

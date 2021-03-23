@@ -1,8 +1,6 @@
+import { IPlayer, IRoom } from "@cambox/common/interfaces";
+import { PlayerSocket } from "@cambox/common/types/PlayerSocket";
 import { AuthToken } from "../interfaces/AuthToken";
-import { PlayerSocket } from "../../../../cambox-common/types/types/PlayerSocket";
-import Room from "./Room";
-import { IPlayer } from '@cambox/common/types/interfaces/api/IPlayer';
-import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
 
 class Player implements IPlayer {
     private userData: AuthToken;

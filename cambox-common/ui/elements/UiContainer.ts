@@ -1,4 +1,4 @@
-import { UiElement } from '../../../types/UiElement';
+import { UiElement } from "../UiElement";
 import { UiStyle } from "../UiStyle";
 
 export interface UiContainer {

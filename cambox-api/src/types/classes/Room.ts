@@ -1,12 +1,10 @@
-import { GameDetails } from "@cambox/common/types/models/GameDetails";
-import { Command } from "@cambox/common/types/models/Command";
-import { IGameService } from "../../../../cambox-common/types/interfaces/api/IGameService";
+import { Command } from "@cambox/common/commands";
+import { IRoom, IPlayer, IGameService } from "@cambox/common/interfaces";
+import { GameDetails } from "@cambox/common/models/GameDetails";
+import { UiBuilder } from "@cambox/common/ui";
+import got from "got";
 import { GameState } from "../interfaces/GameState";
 import Player from "./Player";
-import { IRoom } from "@cambox/common/types/interfaces/api/IRoom";
-import { IPlayer } from "@cambox/common/types/interfaces/api/IPlayer";
-import got from "got";
-import UiBuilder from "@cambox/common/util/UiBuilder";
 
 class Room implements IRoom {    
     private roomCode: string;

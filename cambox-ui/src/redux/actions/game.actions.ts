@@ -1,5 +1,4 @@
-import { GameDetails } from '@cambox/common/types/models/GameDetails';
-import { Command } from '@cambox/common/types/models/Command';
+import { Command, GameDetails } from "@cambox/common";
 
 export const LOAD_GAMES = 'LOAD_GAMES';
 export const loadGames = () => ({

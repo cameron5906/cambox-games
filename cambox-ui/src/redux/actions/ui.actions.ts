@@ -1,4 +1,4 @@
-import { UiElement } from "@cambox/common/types/types/UiElement";
+import { UiElement } from "@cambox/common";
 
 export const SET_UI = 'SET_UI';
 export const setUi = ( elements: UiElement[] ) => ({

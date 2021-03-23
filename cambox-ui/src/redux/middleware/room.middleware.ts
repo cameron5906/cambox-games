@@ -1,10 +1,10 @@
 import { AnyAction, Store } from 'redux';
 import apiService from '../../services/api.service';
 import websocketService from '../../services/websocket.service';
-import { ApiResponse, CreateRoomResponseData, JoinResponseData } from "@cambox/common/types/models/api";
 import { setAuthToken } from '../actions/auth.actions';
 import { CREATE_ROOM, JOIN_ROOM, setRoomCode, SET_ROOM_READY, LEAVE_ROOM } from '../actions/room.actions';
 import { RootState } from '../../types/interfaces/state/RootState';
+import { ApiResponse, CreateRoomResponseData, JoinResponseData } from '@cambox/common';
 
 export default ({ dispatch, getState }: Store ) => ( next: any ) => ( action: AnyAction ) => {
     if( action.type === CREATE_ROOM ) {

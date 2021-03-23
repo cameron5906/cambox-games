@@ -1,9 +1,9 @@
 import { AnyAction, Store } from "redux";
 import apiService from "../../services/api.service";
-import { ApiResponse, AuthenticateResponseData } from "@cambox/common/types/models/api";
 import { AUTHENTICATE, checkIfLoggedIn, CHECK_LOGGED_IN, setAuthToken } from "../actions/auth.actions";
 import { setProfileDetails } from "../actions/profile.actions";
 import * as jwt from 'jsonwebtoken';
+import { ApiResponse, AuthenticateResponseData } from "@cambox/common";
 
 export default ( { dispatch }: Store ) => ( next: any ) => ( action: AnyAction ) => {
     if( action.type === AUTHENTICATE ) {

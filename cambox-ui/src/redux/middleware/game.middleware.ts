@@ -1,9 +1,8 @@
 import { AnyAction, Store } from "redux";
 import apiService from "../../services/api.service";
-import { ApiResponse } from "@cambox/common/types/models/api";
-import { GameDetails } from '@cambox/common/types/models/GameDetails';
 import { LOAD_GAMES, setGames, START_GAME, SEND_COMMAND, STOP_GAME } from "../actions/game.actions";
 import websocketService from "../../services/websocket.service";
+import { ApiResponse, GameDetails } from "@cambox/common";
 
 export default ({ dispatch }: Store ) => ( next: any ) => ( action: AnyAction ) => {
     if( action.type === LOAD_GAMES ) {

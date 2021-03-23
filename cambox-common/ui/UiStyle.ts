@@ -1,4 +1,4 @@
-import { UiStyleProperty } from '../../enums/UiStyleProperty';
+import { UiStyleProperty } from "./UiStyleProperty";
 
 export interface UiStyle {
     type: UiStyleProperty;

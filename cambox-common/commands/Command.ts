@@ -1,4 +1,4 @@
-import { CommandType } from "../enums/CommandType";
+import { CommandType } from ".";
 
 export interface Command<T> {
     type: CommandType;

@@ -1,5 +1,5 @@
+import { PlayerSocket } from "../types/PlayerSocket";
 import { IRoom } from "./IRoom";
-import { PlayerSocket } from '../../types/PlayerSocket';
 
 export interface IPlayer {
     setRoom: (room: IRoom) => void;

@@ -1,4 +1,4 @@
-import { UiCanvasInstructionType } from "../../../enums/UiCanvasInstructionType";
+import { UiCanvasInstructionType } from "..";
 import { UiStyle } from "../UiStyle";
 
 export interface UiCanvas {

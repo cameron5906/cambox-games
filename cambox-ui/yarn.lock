@@ -1407,10 +1407,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cambox/common@^1.2.5":
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/@cambox/common/-/common-1.2.5.tgz#9ab5eb249c414cbdcca3710b035b9aad6d922b57"
-  integrity sha512-oNfZcsYm8G19LciOMI+SX52nzXo/ds7orlRRGPq9x3dBcb3Wv/DoIEKQFQ1zwNm2dbyCftWmtowu9Ntpl3HaqQ==
+"@cambox/common@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@cambox/common/-/common-2.0.0.tgz#bd0fbdf4e41d0fa1b680715c465a4d21b871dd83"
+  integrity sha512-4I7IluzRKeOj/Bb46MiK/9w2SgDlxK3MWd4eGkZW3cs3xLUdJo5UIyg6hScOwhog8SVh1u5J0XWnkm95y+LwBQ==
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"

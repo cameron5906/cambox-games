@@ -1,8 +1,7 @@
-import { UiElement } from "../../../types/types/UiElement";
-import { Command } from "../../../types/models/Command";
 import { IRoom } from "./IRoom";
 import { IPlayer } from "./IPlayer";
-import UiBuilder from "../../../util/UiBuilder";
+import { Command } from "../commands";
+import { UiBuilder } from "../ui";
 
 export interface IGameService {
     onGameStart: ( room: IRoom ) => void;
